@@ -70,7 +70,9 @@ To set up and run REF'QUIZ locally, follow these steps:
 1. Clone the repository and navigate to the project folder:
    ```bash
    git clone <repository-url>
-   cd refquiz
+   cd refquiz-front
+   npm install 
+   npm start
 
 # Customizing and Expanding REF'QUIZ
 
