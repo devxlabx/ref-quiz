@@ -68,9 +68,29 @@ Reusable components, such as buttons, modals, and answer cards, are stored in a 
 To set up and run REF'QUIZ locally, follow these steps:
 
 1. Clone the repository and navigate to the project folder:
-   ```bash
-   git clone <repository-url>
-   cd refquiz
+   
+First, clone the GitHub repository:
+
+git clone <repository-url>
+Replace <repository-url> with the actual URL of the GitHub repository.
+
+then navigate into the project folder:
+
+cd refquiz-front
+
+2. Install Dependencies
+Once inside the project folder, install all the necessary dependencies using **npm (Node Package Manager)**:
+
+npm install
+
+This command will read the **package.json** file and install the required modules for the project.
+
+3. Start the Project
+After installing the dependencies, you can start the development server to run the application locally:
+
+npm start
+
+This will start the project, and you can access it in your browser at **http://localhost:3000** (or the configured port).
 
 # Customizing and Expanding REF'QUIZ
 
