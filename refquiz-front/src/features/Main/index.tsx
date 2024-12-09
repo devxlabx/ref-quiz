@@ -8,15 +8,15 @@ import QuizDetailsScreen from '../QuizDetailsScreen'
 import QuizTopicsScreen from '../QuizTopicsScreen'
 import ResultScreen from '../ResultScreen'
 import SplashScreen from '../SplashScreen'
-import LoginScreen from '../login/LoginPage'
-import RegisterScreen from '../register/RegisterPage'
+import LoginScreen from '../LoginScreen'
+import RegisterScreen from '../RegisterScreen'
 
 function Main() {
   const { currentScreen, setCurrentScreen } = useQuiz()
 
   useEffect(() => {
     setTimeout(() => {
-      setCurrentScreen(ScreenTypes.LoginPage)
+      setCurrentScreen(ScreenTypes.LoginScreen)
     }, 1000)
   }, [setCurrentScreen])
 
@@ -26,8 +26,8 @@ function Main() {
     [ScreenTypes.QuizDetailsScreen]: <QuizDetailsScreen />,
     [ScreenTypes.QuestionScreen]: <QuestionScreen />,
     [ScreenTypes.ResultScreen]: <ResultScreen />,
-    [ScreenTypes.LoginPage]: <LoginScreen />,
-    [ScreenTypes.RegisterPage]: <RegisterScreen />,
+    [ScreenTypes.LoginScreen]: <LoginScreen />,
+    [ScreenTypes.RegisterScreen]: <RegisterScreen />,
 
   }
 
