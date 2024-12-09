@@ -1,6 +1,8 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { device } from './BreakPoints'
 import fontsCss from './fonts.module.css'
+import imgBackground from '../assets/images/imgBackground.jpg';
+
 
 
 export const GlobalStyles = createGlobalStyle`
@@ -137,6 +139,7 @@ export const PageCenter = styled.div<PageCenterTypes>`
   ${({ hasBackgroundImage }) =>
     hasBackgroundImage &&
     css`
+      background-image: url(${imgBackground});
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -192,11 +195,10 @@ export const Flex = styled.div<FlexProps>`
 
 export const CenterCardContainer = styled.div`
   background: ${({ theme }) => theme.colors.cardBackground};
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-  min-width: 500px;
-  overflow: auto;
-  box-sizing : border-box;
+  min-width: 773px;
+  min-height: 620px;
   padding: 50px 10px 60px 10px;
   display: flex;
   flex-direction: column;
