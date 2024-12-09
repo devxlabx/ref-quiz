@@ -5,7 +5,7 @@ import { Moon, Sun } from '../../../config/icons'
 const ToggleLabel = styled.label`
   font-size: 16px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.themeText};
+  color: white;
   display: flex;
   align-items: center;
   position: absolute;

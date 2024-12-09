@@ -21,7 +21,7 @@ export const ButtonStyle = styled.button.attrs(({ outline, bold, big }: ButtonTy
   border: 1px solid
     ${({ theme, outline }) => (!outline ? 'none' : theme.colors.themeColor)};
   font-weight: ${({ bold }) => (bold ? '700' : '400')};
-  border-radius: 9px;
+  border-radius: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
