@@ -108,7 +108,7 @@ const QuizTopicsScreen: React.FC = () => {
             </SelectButton>
           ))}
         </SelectButtonContainer>
-        <Button onClick={goToQuizDetailsScreen}>Continue</Button>
+        <Button text="Continue" onClick={goToQuizDetailsScreen} bold outline width/>
       </CenterCardContainer>
     </PageCenter>
   )
