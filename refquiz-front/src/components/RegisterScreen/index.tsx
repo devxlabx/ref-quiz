@@ -30,9 +30,17 @@ const Input = styled.input`
     font-weight: 100;
     height: 2.5rem;
     margin-top: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background-color:#0D1321;
+    border:none;
+    transition: background-color 0.3s ease; 
+    color:white;
+
+  &:focus {
+    background-color: white; 
+    color:black;
+    outline: none; 
+  }
+    
 `
 
 const ErrorMessage = styled.p`
@@ -46,7 +54,8 @@ const Div = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 10px;
+    
+    gap:10px;
 `
 
 const DivForm = styled.div`
@@ -166,11 +175,8 @@ function RegisterScreen() {
     }
 
     return (
-        <PageCenter justifyCenter hasBackgroundImage>
+        <PageCenter justifyCenter >
             <CenterCardContainer>
-                <LogoContainer>
-                    <AppLogo />
-                </LogoContainer>
                 <Heading>
                     Création du compte
                 </Heading>
@@ -188,7 +194,7 @@ function RegisterScreen() {
                 </DivForm>
 
                 <DivForm id="email-container">
-                    <DetailText>Email :</DetailText>
+                    <DetailText>E-mail :</DetailText>
                     <Input type="email" placeholder='john.doe@mail.com' onChange={emailHandler} required />
                     {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>} 
                 </DivForm>
@@ -206,8 +212,8 @@ function RegisterScreen() {
                 </DivForm>
 
                 <Div>
-                    <Button text="Retour" onClick={goToLoginScreen} bold />
-                    <Button text="Créer" onClick={submitData} bold />
+                    <Button text="Retour" onClick={goToLoginScreen} outline />
+                    <Button text="Créer" onClick={submitData} outline />
                 </Div>
                 
             </CenterCardContainer>
