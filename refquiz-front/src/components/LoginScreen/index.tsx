@@ -31,6 +31,16 @@ const Input = styled.input`
     font-weight: 100;
     height: 2.5rem;
     margin-top: 10px;
+    background-color:#0D1321;
+    border:none;
+    transition: background-color 0.3s ease; 
+    color:white;
+
+  &:focus {
+    background-color: white; 
+    color:black;
+    outline: none; 
+  }
     
 `
 
@@ -46,17 +56,17 @@ const Lien = styled.a`
 const Div = styled.div`
     width: 75%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items:center;
     margin-top: 10px;
+    gap:10px;
 `
 
 const DivForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 75%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    gap: 10px;
 `
 const ErrorMessage = styled.p`
     color: #E63946;
@@ -102,16 +112,10 @@ function LoginScreen() {
     }
 
     return (
-        <PageCenter justifyCenter hasBackgroundImage>
+        <PageCenter justifyCenter >
             <CenterCardContainer>
-                <LogoContainer>
-                    <AppLogo />
-                </LogoContainer>
-                <Heading>
-                    WELCOME TO <HighlightedText> REF'QUIZ</HighlightedText>
-                </Heading>
                     <DivForm>
-                        <DetailText>Email</DetailText>
+                        <DetailText>E-mail</DetailText>
                         <Input
                             type="email"
                             placeholder="john.doe@mail.com"
@@ -130,7 +134,7 @@ function LoginScreen() {
                             required
                         />
                     </DivForm>
-                    <Button text="Connexion" onClick={goToQuizTopicsScreen} bold/>               
+                    <Button text="CONNEXION" onClick={goToQuizTopicsScreen} outline width/>               
                 <Div>
                     <Lien href="#">Mot de passe oublié ?</Lien>
                     <Lien onClick={goToRegisterScreen}>Créer un compte</Lien>
