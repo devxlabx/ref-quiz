@@ -101,7 +101,6 @@ const ToggleTheme: FC<ToggleThemeProps> = ({
 }) => {
   return (
     <ToggleLabel htmlFor={id}>
-      Mode:
       <ToggleInput
         type="checkbox"
         id={id}
