@@ -9,6 +9,7 @@ interface ButtonTypes {
   outline?: boolean
   bold?: boolean
   big?: boolean
+  width?:boolean
   disabled?: boolean
 }
 
@@ -20,6 +21,7 @@ const Button: FC<ButtonTypes> = ({
   outline,
   bold,
   big,
+  width,
   disabled,
 }) => {
   return (
@@ -28,6 +30,7 @@ const Button: FC<ButtonTypes> = ({
       outline={outline}
       bold={bold}
       big={big}
+      width={width}
       disabled={disabled}
     >
       {icon && iconPosition === 'left' && <IconLeft>{icon}</IconLeft>}

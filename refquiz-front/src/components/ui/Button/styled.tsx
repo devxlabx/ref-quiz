@@ -4,24 +4,27 @@ interface ButtonType {
   outline?: boolean
   bold?: boolean
   big?: boolean
+  width?:boolean
 }
 
-export const ButtonStyle = styled.button.attrs(({ outline, bold, big }: ButtonType) => ({
+export const ButtonStyle = styled.button.attrs(({ outline, bold, big, width }: ButtonType) => ({
   outline,
   bold,
   big,
+  width,
 }))`
-  width: 195px;
+  width: ${({ width }) => (width ? '75%' : '180px')};
   min-height: 50px;
+  padding:15px;
   color: ${({ theme, outline }) =>
     outline ? theme.colors.outlineButtonText : theme.colors.buttonText};
   background: ${({ theme, outline }) =>
     outline ? theme.colors.cardBackground : theme.colors.buttonBackground};
-  font-size: clamp(16px, 5vw, 24px);
+  font-size: clamp(10px, 5vw, 16px);
   border: 1px solid
     ${({ theme, outline }) => (!outline ? 'none' : theme.colors.themeColor)};
   font-weight: ${({ bold }) => (bold ? '700' : '400')};
-  border-radius: 15px;
+  border-radius: 25px;
   display: flex;
   justify-content: center;
   align-items: center;
