@@ -192,6 +192,7 @@ const ResultScreen: FC = () => {
           icon={<Refresh />}
           iconPosition="left"
           bold
+          outline
         />
       </Flex>
     </ResultScreenContainer>
