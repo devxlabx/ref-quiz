@@ -190,7 +190,11 @@ const ResultScreen: FC = () => {
       <Button
           
           onClick={onClickRetry}
-        >RETRY <Icon><Refresh/></Icon></Button>
+          icon={<Refresh />}
+          iconPosition="left"
+          bold
+          outline
+        />
       </Flex>
     </ResultScreenContainer>
   )
