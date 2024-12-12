@@ -59,30 +59,29 @@ export const validateNameInput = (name: string): boolean => {
 };
 
 export const validateEmailInput = (email: string): boolean => {
-    const cleanedEmail = email?.trim(); 
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(cleanedEmail || "");
+  if (!email) return false; 
+
+  const cleanedEmail = email.trim(); 
+  const emailRegex = /^(?:(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+)|(?:".+"))@(?:(?:\[(?:[0-9]{1,3}\.){3}[0-9]{1,3}\])|(?:\[(IPv6:[a-fA-F0-9:]+)\])|(?:[a-zA-Z0-9.-]+(?:\.[a-zA-Z]{2,})+))$/;
+
+  return emailRegex.test(cleanedEmail);
 };
 
+
 export const validatePasswordInput = (password: string): boolean => {
-  if (!password || password.length === 0) {
-    return false; 
-  }
-    // Cette regex exige :
-    // - Au moins une lettre minuscule (`?=.*[a-z]`)
-    // - Au moins une lettre majuscule (`?=.*[A-Z]`)
-    // - Au moins un chiffre (`?=.*\d`)
-    // - Au moins un caractère spécial(y compris l'espace) (`?=.*[!@#$%^&*()_+]`)
-    // - Minimum 8 caractères
+  if (!password) return false; 
+
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+ .])[a-zA-Z\d!@#$%^&*()_+ .]{8,}$/;
 
   return passwordRegex.test(password);
 };
-    
 
-export const validateMatchPasswordInput = (passwordToValidate : string, password: string): boolean => {
-  return password === passwordToValidate;
+export const validateMatchPasswordInput = (passwordToValidate: string, password: string): boolean => {
+  if (!password || !passwordToValidate) return false; 
+  return passwordToValidate === password; 
 };
+
+
 
 export const checkCredentials = (emailInput : string, emailUser: string, passwordInput: string, passwordUser: string): boolean => {
   return passwordInput === passwordUser && emailInput === emailUser;
