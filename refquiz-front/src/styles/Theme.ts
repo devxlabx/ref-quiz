@@ -10,16 +10,16 @@ export const themes: Record<string, Theme> = {
     colors: {
       primaryText: '#0D1321', // Texte des questions - sombre pour la lisibilité
       secondaryText: '#1D3557', // Texte des réponses - bleu profond
-      themeText: '#000000', // Texte du thème - black
-      themeColor: '#E63946', // Rouge inspiré des maillots sportifs
+      themeText: 'white', // Texte du thème - black
+      themeColor: '#ffffff', //'#E63946', // Rouge inspiré des maillots sportifs
       themeGradient: 'linear-gradient(to right, #E63946, #F4A261)', // Rouge vers orange
       background: 'linear-gradient(to right, #E63946, #F4A261)',  // Rouge vers orange
-      cardBackground: '#FFFFFF', // Fond des cartes
+      cardBackground: '#0D1321', // Fond des cartes
       selectTopicBg: '#A8DADC', // Bleu clair pour la sélection des sujets
-      appLogo: '#1D3557', // Bleu profond pour le logo
-      buttonText: '#FFFFFF', // Texte des boutons
-      outlineButtonText: '#E63946', // Rouge pour les boutons outline
-      buttonBackground: 'linear-gradient(90.04deg, #E63946 0.03%, #F4A261 99.96%)', // Dégradé rouge vers orange pour les boutons
+      appLogo: '#000000', // Bleu profond pour le logo
+      buttonText: 'white', // Texte des boutons
+      outlineButtonText: 'white', // Rouge pour les boutons outline
+      buttonBackground: '#0D1321',//'linear-gradient(90.04deg, #E63946 0.03%, #F4A261 99.96%)', // Dégradé rouge vers orange pour les boutons
       selectedAnswer: '#F4A261', // Orange pour les réponses sélectionnées
       infoText: '#457B9D', // Texte d'information (bleu pour le contraste)
       infoBackground: '#A8DADC', // Fond des informations (bleu clair)
@@ -57,15 +57,15 @@ export const themes: Record<string, Theme> = {
       primaryText: '#FFFFFF', // Texte des questions - blanc pour contraste
       secondaryText: '#F4A261', // Texte des réponses - orange vif
       themeText: '#ffffff', // Texte du thème - rouge sportif
-      themeColor: '#E63946', // Couleur principale - white
+      themeColor: '#FFFFFF', //'#E63946', // Couleur principale - white
       themeGradient: 'linear-gradient(90deg, #1D3557 0%, #457B9D 100%)', // Dégradé bleu pour modernité
       background: 'linear-gradient(90deg, #1D3557 0%, #0D1321 100%)', // Fond sombre avec des tons bleus
       cardBackground: '#0D1321', // Fond des cartes - bleu très sombre
       selectTopicBg: '#1D3557', // Fond pour la sélection des sujets
       appLogo: '#F4A261', // Orange vif pour le logo
       buttonText: '#FFFFFF', // Texte des boutons - blanc
-      outlineButtonText: '#F4A261', // Texte des boutons outline - orange
-      buttonBackground: 'linear-gradient(90.04deg, #E63946 0.03%, #F4A261 99.96%)', // Boutons rouge vers orange
+      outlineButtonText: '#FFFFFF', //'#F4A261', // Texte des boutons outline - orange
+      buttonBackground: '#000000',//'linear-gradient(90.04deg, #E63946 0.03%, #F4A261 99.96%)', // Boutons rouge vers orange
       selectedAnswer: '#457B9D', // Bleu pour la réponse sélectionnée
       infoText: '#A8DADC', // Texte d’information - bleu clair
       infoBackground: '#1D3557', // Fond d’information - bleu profond
