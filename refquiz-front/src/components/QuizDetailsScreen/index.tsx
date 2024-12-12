@@ -76,6 +76,7 @@ const QuizDetailsScreen = () => {
           iconPosition="left"
           onClick={goToQuestionScreen}
           bold
+          outline
         />
       </CenterCardContainer>
     </PageCenter>
