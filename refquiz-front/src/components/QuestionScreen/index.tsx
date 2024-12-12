@@ -165,6 +165,7 @@ const QuestionScreen: FC = () => {
             icon={<Next />}
             iconPosition="right"
             disabled={selectedAnswer.length === 0}
+            outline
           />
         </ButtonWrapper>
       </QuizContainer>
