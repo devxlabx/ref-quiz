@@ -195,10 +195,10 @@ export const Flex = styled.div<FlexProps>`
 
 export const CenterCardContainer = styled.div`
   background: ${({ theme }) => theme.colors.cardBackground};
-  border-radius: 20px;
+  border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
-  min-width: 773px;
-  min-height: 620px;
+  min-width: 500px;
+  min-height: 500px;
   padding: 50px 10px 60px 10px;
   display: flex;
   flex-direction: column;
