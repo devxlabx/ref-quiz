@@ -74,8 +74,9 @@ const QuizDetailsScreen = () => {
         <Button
  
           onClick={goToQuestionScreen}
-          
-          ><Icon><StartIcon /></Icon> Start</Button>
+          bold
+          outline
+        />
       </CenterCardContainer>
     </PageCenter>
   )
