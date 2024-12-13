@@ -13,27 +13,22 @@ import { ScreenTypes } from '../../types'
 import { validateEmailInput, validateMatchPasswordInput, validateNameInput, validatePasswordInput } from '../../utils/helpers'
 
 const DetailText = styled.p`
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 29px;
+    
 `
 
 const Heading = styled.h2`
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
+    
 `
 
 const Input = styled.input`
-    font-size: 20px;
-    font-weight: 100;
-    height: 2.5rem;
+    height: 2rem;
     margin-top: 10px;
     background-color:#0D1321;
     border:none;
     transition: background-color 0.3s ease; 
     color:white;
+    border-radius:5px;
+
 
   &:focus {
     background-color: white; 
@@ -62,8 +57,6 @@ const DivForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 75%;
-    margin-top: 10px;
-    margin-bottom: 10px;
     position: relative;
 `
 
@@ -177,15 +170,16 @@ function RegisterScreen() {
     return (
         <PageCenter justifyCenter >
             <CenterCardContainer>
+                
                 <Heading>
                     Création du compte
                 </Heading>
-
                 <DivForm id="first-name-container">
                     <DetailText>Nom :</DetailText>
                     <Input type="text" placeholder='Doe' onChange={firstNameHandler} required />
                     {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>} 
                 </DivForm>
+                
 
                 <DivForm id="last-name-container">
                     <DetailText>Prénom :</DetailText>
