@@ -198,8 +198,8 @@ export const CenterCardContainer = styled.div`
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
   min-width: 500px;
-  min-height: 500px;
-  max-height: 90vh;
+  overflow: auto;
+  box-sizing : border-box;
   padding: 50px 10px 60px 10px;
   display: flex;
   flex-direction: column;
