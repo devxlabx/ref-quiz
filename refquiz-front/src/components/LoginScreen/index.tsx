@@ -14,27 +14,16 @@ import { ScreenTypes } from '../../types'
 import { checkCredentials, validateEmailInput } from '../../utils/helpers'
 
 const DetailText = styled.p`
-    font-weight: 500;
-    font-size: 25px;
-    line-height: 29px;
-`
-
-const Heading = styled.h2`
-    font-size: 32px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-align: center;
 `
 
 const Input = styled.input`
-    font-size: 20px;
-    font-weight: 100;
-    height: 2.5rem;
+    height: 2rem;
     margin-top: 10px;
     background-color:#0D1321;
     border:none;
     transition: background-color 0.3s ease; 
     color:white;
+    border-radius:5px;
 
   &:focus {
     background-color: white; 
@@ -45,9 +34,6 @@ const Input = styled.input`
 `
 
 const Lien = styled.a`
-    font-size: 20px;
-    font-weight: 100;
-    margin-top: 15px;
     text-decoration: none;
     color: grey;
     cursor:pointer;
@@ -58,7 +44,6 @@ const Div = styled.div`
     display: flex;
     flex-direction: column;
     align-items:center;
-    margin-top: 10px;
     gap:10px;
 `
 
@@ -66,7 +51,6 @@ const DivForm = styled.div`
     display: flex;
     flex-direction: column;
     width: 75%;
-    gap: 10px;
 `
 const ErrorMessage = styled.p`
     color: #E63946;
@@ -135,10 +119,10 @@ function LoginScreen() {
                         />
                     </DivForm>
                     <Button text="CONNEXION" onClick={goToQuizTopicsScreen} outline width/>               
-                <Div>
-                    <Lien href="#">Mot de passe oublié ?</Lien>
-                    <Lien onClick={goToRegisterScreen}>Créer un compte</Lien>
-                </Div>
+                    <Div>
+                        <Lien href="#">Mot de passe oublié ?</Lien>
+                        <Lien onClick={goToRegisterScreen}>Créer un compte</Lien>
+                    </Div>
             </CenterCardContainer>
         </PageCenter>
     )
