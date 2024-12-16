@@ -11,6 +11,7 @@ import {
 import { useQuiz } from '../../context/QuizContext'
 import { ScreenTypes } from '../../types'
 import { validateEmailInput, validateMatchPasswordInput, validateNameInput, validatePasswordInput } from '../../utils/helpers'
+import { device } from '../../styles/BreakPoints'
 
 const DetailText = styled.p`
     
@@ -23,20 +24,24 @@ const Heading = styled.h2`
 const Input = styled.input`
     height: 2rem;
     margin-top: 10px;
-    background-color:#0D1321;
-    border:none;
-    transition: background-color 0.3s ease; 
-    color:white;
-    border-radius:5px;
-
-
-  &:focus {
-    background-color: white; 
-    color:black;
-    outline: none; 
-  }
+    background-color: #0D1321;
+    border: none;
+    transition: background-color 0.3s ease;
+    color: white;
+    border-radius: 5px;
+    border: 0.5px solid rgb(39, 40, 43);
     
+   
+
+    &:focus {
+        background-color: white;
+        color: black;
+        outline: none;
+        
+       
+    }
 `
+
 
 const ErrorMessage = styled.p`
     color:  #E63946;
@@ -45,19 +50,31 @@ const ErrorMessage = styled.p`
 `
 
 const Div = styled.div`
-    width: 75%;
+    width: 90%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    
+    margin-top:10px;
     gap:10px;
 `
 
 const DivForm = styled.div`
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 90%;
     position: relative;
+`
+const ErrorContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+    height: 30px; 
+    width:500px;
+    max-width:90%;
+    @media ${device.md} {
+        width: 100%;
+      }
+
 `
 
 function RegisterScreen() {
@@ -78,7 +95,10 @@ function RegisterScreen() {
     let validLastName = false;
     let validPassword = false;
     let validPasswordMatch = false;
-
+    const removePlaceHolder = (e: React.MouseEvent<HTMLInputElement>) => {
+        e.currentTarget.placeholder=""
+    }
+    
     const firstNameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         if (validateNameInput(value)) {
@@ -176,33 +196,39 @@ function RegisterScreen() {
                 </Heading>
                 <DivForm id="first-name-container">
                     <DetailText>Nom :</DetailText>
-                    <Input type="text" placeholder='Doe' onChange={firstNameHandler} required />
-                    {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>} 
+                    <Input type="text" placeholder='Doe' onChange={firstNameHandler} onClick={removePlaceHolder} required />
+                    <ErrorContainer>
+                                {errors.firstName && <ErrorMessage>{errors.firstName}</ErrorMessage>}
+                    </ErrorContainer>
                 </DivForm>
                 
 
                 <DivForm id="last-name-container">
                     <DetailText>Prénom :</DetailText>
-                    <Input type="text" placeholder='John' onChange={lastNameHandler} required />
-                    {errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>} 
+                    <Input type="text" placeholder='John' onChange={lastNameHandler} onClick={removePlaceHolder} required />
+                    <ErrorContainer>{errors.lastName && <ErrorMessage>{errors.lastName}</ErrorMessage>} </ErrorContainer>
+                    
                 </DivForm>
 
                 <DivForm id="email-container">
                     <DetailText>E-mail :</DetailText>
-                    <Input type="email" placeholder='john.doe@mail.com' onChange={emailHandler} required />
-                    {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>} 
+                    <Input type="email" placeholder='john.doe@mail.com' onChange={emailHandler}  onClick={removePlaceHolder} required />
+                    <ErrorContainer>{errors.email && <ErrorMessage>{errors.email}</ErrorMessage>} </ErrorContainer>
+                    
                 </DivForm>
 
                 <DivForm id="password-container">
                     <DetailText>Mot de passe :</DetailText>
-                    <Input type="password" placeholder='***********' onChange={passwordHandler} required />
-                    {errors.password && <ErrorMessage>{errors.password}</ErrorMessage>} 
+                    <Input type="password" placeholder='***********' onChange={passwordHandler}  onClick={removePlaceHolder} required />
+                    <ErrorContainer>{errors.password && <ErrorMessage>{errors.password}</ErrorMessage>} </ErrorContainer>
+                    
                 </DivForm>
 
                 <DivForm id="password-tomatch-container">
                     <DetailText>Confirmer le mot de passe :</DetailText>
-                    <Input type="password" placeholder='***********' onChange={passwordMatchHandler} required />
-                    {errors.passwordMatch && <ErrorMessage>{errors.passwordMatch}</ErrorMessage>} 
+                    <Input type="password" placeholder='***********' onChange={passwordMatchHandler}  onClick={removePlaceHolder} required />
+                    <ErrorContainer>{errors.passwordMatch && <ErrorMessage>{errors.passwordMatch}</ErrorMessage>} </ErrorContainer>
+                    
                 </DivForm>
 
                 <Div>
