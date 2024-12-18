@@ -8,10 +8,11 @@ import { device } from '../../styles/BreakPoints'
 import { PageCenter } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 
-import Button from '../ui/Button'
-import ModalWrapper from '../ui/ModalWrapper'
+import Button from '../../components/ButtonComponent/StyledButton'
+import ModalWrapper from '../../components/ModalWrapper'
 import Question from './Question'
 import QuizHeader from './QuizHeader'
+import Icon from '../../components/Icons/styledIcons'
 
 const QuizContainer = styled.div<{ selectedAnswer: boolean }>`
   width: 900px;
@@ -160,12 +161,9 @@ const QuestionScreen: FC = () => {
         />
         <ButtonWrapper>
           <Button
-            text={activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}
             onClick={onClickNext}
-            icon={<Next />}
-            iconPosition="right"
             disabled={selectedAnswer.length === 0}
-          />
+          ><Icon><Next /></Icon>{activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}</Button>
         </ButtonWrapper>
       </QuizContainer>
       {/* timer or finish quiz modal*/}

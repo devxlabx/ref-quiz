@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styled from 'styled-components'
 
-import Button from '../Button'
+import Button from '../ButtonComponent/StyledButton'
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -65,7 +65,7 @@ const ModalWrapper: FC<ModalWrapperProps> = ({
         {icon}
         <ModalTitle>{title}</ModalTitle>
         <ModalSubtitle>{subtitle}</ModalSubtitle>
-        <Button text={buttonTitle} onClick={onClick} bold big />
+        <Button onClick={onClick}>{buttonTitle}</Button>
       </ModalContent>
     </ModalContainer>
   )

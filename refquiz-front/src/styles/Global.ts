@@ -2,6 +2,7 @@ import styled, { createGlobalStyle, css } from 'styled-components'
 import { device } from './BreakPoints'
 import fontsCss from './fonts.module.css'
 
+
 export const GlobalStyles = createGlobalStyle`
  ${fontsCss} // this works as a normal styled css
  
@@ -29,6 +30,7 @@ body {
   line-height: 1;
   overflow-x: hidden;
   position: relative;
+  
 }
 h1,
 h2,
@@ -124,26 +126,34 @@ export const Box = styled.div<BoxStyleTypes>`
 `
 
 interface PageCenterTypes {
-  light?: boolean
-  justifyCenter?: boolean
+  light?: boolean;
+  justifyCenter?: boolean;
+  hasBackgroundImage?: boolean;
 }
 
 export const PageCenter = styled.div<PageCenterTypes>`
   background: ${({ light, theme }) =>
     light ? `${theme.colors.background}` : `${theme.colors.themeGradient}`};
+  ${({ hasBackgroundImage }) =>
+    hasBackgroundImage &&
+    css`
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      max-height: 100vh;
+    `}
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
   padding-top: 50px;
-  // due to flex direction column
   ${({ justifyCenter }) =>
     justifyCenter &&
     css`
       justify-content: center;
     `}
-`
+`;
 
 interface FlexProps {
   center?: boolean
@@ -182,14 +192,17 @@ export const Flex = styled.div<FlexProps>`
 
 export const CenterCardContainer = styled.div`
   background: ${({ theme }) => theme.colors.cardBackground};
-  border-radius: 4px;
-  min-width: 773px;
-  min-height: 620px;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  min-width: 500px;
+  overflow: auto;
+  box-sizing : border-box;
   padding: 50px 10px 60px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap:20px;
   @media ${device.md} {
     min-width: 100%;
   }
@@ -208,12 +221,7 @@ export const LogoContainer = styled.div`
   }
   svg {
     width: 220px;
-    rect {
-      stroke: ${({ theme }) => theme.colors.appLogo};
-    }
-    path {
-      fill: ${({ theme }) => theme.colors.appLogo};
-    }
+   
   }
 `
 

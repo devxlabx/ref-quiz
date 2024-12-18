@@ -52,3 +52,57 @@ export const shuffleArray = <T>(array: T[]): T[] => {
 
   return shuffledArray
 }
+export const validateNameInput = (name: string): boolean => {
+  const cleanedName = name?.trim();
+  const nameRegex = /^[a-zA-Z]{2,50}$/;
+  return nameRegex.test(cleanedName || "");
+};
+
+export const validateEmailInput = (email: string): boolean => {
+  if (!email) return false;
+
+  const [localPart, domainPart] = email.trim().split('@');
+
+  if (!localPart || !domainPart || domainPart.includes('@')) {
+    return false;
+  }
+
+  const localPartRegex = /^(?:(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+)|(?:".+"))$/;
+  if (!localPartRegex.test(localPart)) {
+    return false;
+  }
+
+
+  const domainPartRegex = /^(?:[a-zA-Z0-9.-]+(?:\.[a-zA-Z\u00A1-\uFFFF]{2,})+)|(?:\[(IPv6:[a-fA-F0-9:]+)\])$/;
+  
+  const domainIpv4Regex = /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/;
+
+  if (!(domainPartRegex.test(domainPart) || domainIpv4Regex.test(domainPart))) {
+    return false;
+  }
+
+  return true;
+};
+
+
+
+
+
+export const validatePasswordInput = (password: string): boolean => {
+  if (!password) return false; 
+
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+ .])[a-zA-Z\d!@#$%^&*()_+ .]{8,}$/;
+
+  return passwordRegex.test(password);
+};
+
+export const validateMatchPasswordInput = (passwordToValidate: string, password: string): boolean => {
+  if (!password || !passwordToValidate) return false; 
+  return passwordToValidate === password; 
+};
+
+
+
+export const checkCredentials = (emailInput : string, emailUser: string, passwordInput: string, passwordUser: string): boolean => {
+  return passwordInput === passwordUser && emailInput === emailUser;
+};

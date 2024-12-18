@@ -7,11 +7,12 @@ import { device } from '../../styles/BreakPoints'
 import { Flex, LogoContainer, ResizableBox } from '../../styles/Global'
 import { refreshPage } from '../../utils/helpers'
 
-import Button from '../ui/Button'
-import CodeSnippet from '../ui/CodeSnippet'
-import QuizImage from '../ui/QuizImage'
+import Button from '../../components/ButtonComponent/StyledButton'
+import CodeSnippet from '../../components/CodeSnippet'
+import QuizImage from '../../components/QuizImage'
 import ResultOverview from './ResultOverview'
 import RightAnswer from './RightAnswer'
+import Icon from '../../components/Icons/styledIcons'
 
 const ResultScreenContainer = styled.div`
   max-width: 900px;
@@ -186,13 +187,10 @@ const ResultScreen: FC = () => {
         )}
       </InnerContainer>
       <Flex flxEnd>
-        <Button
-          text="RETRY"
+      <Button
+          
           onClick={onClickRetry}
-          icon={<Refresh />}
-          iconPosition="left"
-          bold
-        />
+        >RETRY <Icon><Refresh/></Icon></Button>
       </Flex>
     </ResultScreenContainer>
   )

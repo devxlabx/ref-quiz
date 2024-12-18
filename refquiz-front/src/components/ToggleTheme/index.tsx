@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Moon, Sun } from '../../../config/icons'
+import { Moon, Sun } from '../../config/icons'
 
 const ToggleLabel = styled.label`
   font-size: 16px;
   font-weight: 700;
-  color: ${({ theme }) => theme.colors.themeText};
+  color: white;
   display: flex;
   align-items: center;
   position: absolute;
@@ -101,7 +101,6 @@ const ToggleTheme: FC<ToggleThemeProps> = ({
 }) => {
   return (
     <ToggleLabel htmlFor={id}>
-      Mode:
       <ToggleInput
         type="checkbox"
         id={id}

@@ -8,13 +8,15 @@ import QuizDetailsScreen from '../QuizDetailsScreen'
 import QuizTopicsScreen from '../QuizTopicsScreen'
 import ResultScreen from '../ResultScreen'
 import SplashScreen from '../SplashScreen'
+import LoginScreen from '../login/LoginPage'
+import RegisterScreen from '../register/RegisterPage'
 
 function Main() {
   const { currentScreen, setCurrentScreen } = useQuiz()
 
   useEffect(() => {
     setTimeout(() => {
-      setCurrentScreen(ScreenTypes.QuizTopicsScreen)
+      setCurrentScreen(ScreenTypes.LoginPage)
     }, 1000)
   }, [setCurrentScreen])
 
@@ -24,6 +26,9 @@ function Main() {
     [ScreenTypes.QuizDetailsScreen]: <QuizDetailsScreen />,
     [ScreenTypes.QuestionScreen]: <QuestionScreen />,
     [ScreenTypes.ResultScreen]: <ResultScreen />,
+    [ScreenTypes.LoginPage]: <LoginScreen />,
+    [ScreenTypes.RegisterPage]: <RegisterScreen />,
+
   }
 
   const ComponentToRender = screenComponents[currentScreen] || <SplashScreen />
