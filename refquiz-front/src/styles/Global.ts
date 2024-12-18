@@ -1,7 +1,6 @@
 import styled, { createGlobalStyle, css } from 'styled-components'
 import { device } from './BreakPoints'
 import fontsCss from './fonts.module.css'
-import imgBackground from '../assets/images/imgBackground.jpg';
 
 
 
@@ -139,7 +138,6 @@ export const PageCenter = styled.div<PageCenterTypes>`
   ${({ hasBackgroundImage }) =>
     hasBackgroundImage &&
     css`
-      background-image: url(${imgBackground});
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;

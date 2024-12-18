@@ -163,8 +163,7 @@ const QuestionScreen: FC = () => {
           <Button
             onClick={onClickNext}
             disabled={selectedAnswer.length === 0}
-            outline
-          />
+          ><Icon><Next /></Icon>{activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}</Button>
         </ButtonWrapper>
       </QuizContainer>
       {/* timer or finish quiz modal*/}
