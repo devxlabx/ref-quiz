@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { Moon, Sun } from '../../../config/icons'
+import { Moon, Sun } from '../../config/icons'
 
 const ToggleLabel = styled.label`
   font-size: 16px;

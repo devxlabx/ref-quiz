@@ -63,25 +63,20 @@ export const validateEmailInput = (email: string): boolean => {
 
   const [localPart, domainPart] = email.trim().split('@');
 
-  // Si l'email n'a pas une partie locale ou domaine, ou s'il y a un '@' supplémentaire
   if (!localPart || !domainPart || domainPart.includes('@')) {
     return false;
   }
 
-  // 1. Validation de la partie locale (avant le @)
   const localPartRegex = /^(?:(?:[a-zA-Z0-9!#$%&'*+/=?^_`{|}~.-]+)|(?:".+"))$/;
   if (!localPartRegex.test(localPart)) {
     return false;
   }
 
-  // 2. Validation du domaine (après le @)
-  // 2.1. Regex pour valider les domaines classiques et les domaines Unicode
+
   const domainPartRegex = /^(?:[a-zA-Z0-9.-]+(?:\.[a-zA-Z\u00A1-\uFFFF]{2,})+)|(?:\[(IPv6:[a-fA-F0-9:]+)\])$/;
   
-  // 2.2. Validation de l'IPv4
   const domainIpv4Regex = /^[0-9]{1,3}(\.[0-9]{1,3}){3}$/;
 
-  // Valider si le domaine correspond soit à un IPv4 ou à un domaine classique/Unicode ou IPv6 avec crochets
   if (!(domainPartRegex.test(domainPart) || domainIpv4Regex.test(domainPart))) {
     return false;
   }

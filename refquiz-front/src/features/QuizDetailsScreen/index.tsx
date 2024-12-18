@@ -11,7 +11,8 @@ import {
 import { ScreenTypes } from '../../types'
 import { convertSeconds } from '../../utils/helpers'
 
-import Button from '../ui/Button'
+import Button from '../../components/ButtonComponent/StyledButton'
+import Icon from '../../components/Icons/styledIcons'
 
 const AppTitle = styled.h2`
   font-weight: 700;
@@ -71,13 +72,10 @@ const QuizDetailsScreen = () => {
           </DetailText>
         </DetailTextContainer>
         <Button
-          text="Start"
-          icon={<StartIcon />}
-          iconPosition="left"
+ 
           onClick={goToQuestionScreen}
-          bold
-          outline
-        />
+          
+          ><Icon><StartIcon /></Icon> Start</Button>
       </CenterCardContainer>
     </PageCenter>
   )

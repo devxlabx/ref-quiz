@@ -3,9 +3,9 @@ import styled from 'styled-components'
 
 import { device } from '../../../styles/BreakPoints'
 
-import CodeSnippet from '../../ui/CodeSnippet'
+import CodeSnippet from '../../../components/CodeSnippet'
 import Answer from '../Answer'
-import QuizImage from '../../ui/QuizImage'
+import QuizImage from '../../../components/QuizImage'
 
 const QuestionContainer = styled.div`
   margin-top: 30px;

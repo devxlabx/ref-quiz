@@ -12,7 +12,7 @@ import {
 } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 
-import Button from '../ui/Button'
+import Button from '../../components/ButtonComponent/StyledButton'
 
 const Heading = styled.h2`
   font-size: 32px;
@@ -108,7 +108,7 @@ const QuizTopicsScreen: React.FC = () => {
             </SelectButton>
           ))}
         </SelectButtonContainer>
-        <Button text="Continue" onClick={goToQuizDetailsScreen} bold outline width/>
+        <Button onClick={goToQuizDetailsScreen}>Continue</Button>
       </CenterCardContainer>
     </PageCenter>
   )

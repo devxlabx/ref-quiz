@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { ThemeProvider } from 'styled-components'
 
-import Main from './components/Main'
-import ToggleTheme from './components/ui/ToggleTheme'
+import Main from './features/Main'
+import ToggleTheme from './components/ToggleTheme'
 import QuizProvider from './context/QuizProvider'
+import './index.css'
 import { GlobalStyles } from './styles/Global'
 import { themes } from './styles/Theme'
+
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState(() => {
