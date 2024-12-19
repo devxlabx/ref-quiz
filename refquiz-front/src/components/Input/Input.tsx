@@ -1,4 +1,6 @@
 import React from 'react';
+import './Input.css';
+
 
 interface InputFieldProps {
   type: string;
@@ -13,17 +15,17 @@ const InputField: React.FC<InputFieldProps> = ({
   type,
   placeholder,
   onChange,
-  onClick,  // Make sure to handle onClick prop
+  onClick,  
   label,
 }) => (
-  <div className="mb-4">
-    <label className="block text-gray-300 mb-2">{label}</label>
+  <div className='inputFieldContainer'>
+    <label className='inputFieldLabel'>{label}</label>
     <input
       type={type}
       placeholder={placeholder}
-      className="w-full py-2 px-1 bg-transparent text-white  rounded focus:outline-none focus:bg-white focus:text-black transition-all"
+      className='inputFieldInput'
       onChange={onChange}
-      onClick={onClick}  // Attach onClick event to input
+      onClick={onClick}  
       required
     />
   </div>

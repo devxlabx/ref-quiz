@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import styled from 'styled-components'
 
-import Button from '../ButtonComponent/StyledButton'
+import Button from '../Button/Button'
 
 const ModalContainer = styled.div`
   position: fixed;

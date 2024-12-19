@@ -8,8 +8,10 @@ import QuizDetailsScreen from '../QuizDetailsScreen'
 import QuizTopicsScreen from '../QuizTopicsScreen'
 import ResultScreen from '../ResultScreen'
 import SplashScreen from '../SplashScreen'
-import LoginScreen from '../login/LoginPage'
-import RegisterScreen from '../register/RegisterPage'
+import LoginScreen from '../Login/Login'
+import RegisterScreen from '../Register/Register'
+import LoginPage from '../../pages/LoginPage'
+import RegisterPage from '../../pages/RegisterPage'
 
 function Main() {
   const { currentScreen, setCurrentScreen } = useQuiz()
@@ -26,8 +28,8 @@ function Main() {
     [ScreenTypes.QuizDetailsScreen]: <QuizDetailsScreen />,
     [ScreenTypes.QuestionScreen]: <QuestionScreen />,
     [ScreenTypes.ResultScreen]: <ResultScreen />,
-    [ScreenTypes.LoginPage]: <LoginScreen />,
-    [ScreenTypes.RegisterPage]: <RegisterScreen />,
+    [ScreenTypes.LoginPage]: <LoginPage />,
+    [ScreenTypes.RegisterPage]: <RegisterPage />,
 
   }
 

@@ -7,12 +7,13 @@ import {
   validateNameInput,
   validatePasswordInput,
 } from '../../utils/helpers';
-import Button from '../../components/ButtonComponent/StyledButton';
-import InputField from '../../components/InputComponent/Input';
-import Card from '../../components/CardComponent/Card';
-import Error from '../../components/ErrorComponent/error';
+import Button from '../../components/Button/Button';
+import InputField from '../../components/Input/Input';
+import Card from '../../components/Card/Card';
+import Error from '../../components/Errors/Error';
+import './Register.css';
 
-function RegisterPage() {
+function Register() {
   const { setCurrentScreen } = useQuiz();
 
   const [email, setEmail] = useState<string>('');
@@ -52,9 +53,8 @@ function RegisterPage() {
   const goToLoginScreen = () => setCurrentScreen(ScreenTypes.LoginPage);
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-        <Card className="w-11/12 sm:w-8/12 md:w-6/12 lg:w-3/12 h-3/6">
-            <h2 className="text-2xl font-bold text-center mb-6">Création du compte</h2>
+        <Card className="card">
+            <h2 className="title">Création du compte</h2>
 
           <InputField
             label="Nom"
@@ -152,13 +152,12 @@ function RegisterPage() {
           </Error>
 
 
-          <div className="flex justify-between mt-4 gap-x-10">
+          <div className="flex space-between gap-x-4">
             <Button onClick={goToLoginScreen}>Retour</Button>
             <Button onClick={submitData}>Créer</Button>
           </div>
       </Card>
-    </div>
   );
 }
 
-export default RegisterPage;
+export default Register;
