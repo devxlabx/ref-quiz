@@ -1,0 +1,12 @@
+
+.inputFieldContainer {
+    @apply mb-4;
+  }
+  
+  .inputFieldLabel {
+    @apply block text-gray-300 mb-2;
+  }
+  
+  .inputFieldInput {
+    @apply w-full py-2 px-1 bg-transparent text-white rounded focus:outline-none focus:bg-white focus:text-black transition-all;
+  }

@@ -1,13 +1,14 @@
-import Button from '../../components/ButtonComponent/StyledButton'
+import Button from '../../components/Button/Button'
 import React, { useState } from 'react'
 import { useQuiz } from '../../context/QuizContext'
 import { ScreenTypes } from '../../types'
 import { validateEmailInput } from '../../utils/helpers'
-import InputField from '../../components/InputComponent/Input'
-import Card from '../../components/CardComponent/Card'
-import Error from '../../components/ErrorComponent/error'
+import InputField from '../../components/Input/Input'
+import Card from '../../components/Card/Card'
+import Error from '../../components/Errors/Error'
+import './Login.css';
 
-function LoginPage() {
+function Login() {
     const { setCurrentScreen } = useQuiz()
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -46,8 +47,7 @@ function LoginPage() {
     }
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gray-900">
-            <Card className="w-11/12 sm:w-8/12 md:w-6/12 lg:w-3/12 h-50 sm:h-48 md:h-80 lg:h-3/6 ">
+            <Card className="login-card ">
                 <InputField
                     label="E-mail"
                     type="email"
@@ -70,13 +70,12 @@ function LoginPage() {
                 <Error>
                 </Error>
         
-                {/* Connexion Button */}
-                <div className="flex items-center justify-center mb-5">
+                <div className="button-container">
                     <Button onClick={goToQuizTopicsScreen}>CONNEXION</Button>
                 </div>
   
 
-                <div className="flex flex-col items-center gap-6 mt-5">
+                <div className="link-container">
                     <a href="#" className="text-white-400 hover:text-gray-300 transition">
                         Mot de passe oublié ?
                     </a>
@@ -88,8 +87,7 @@ function LoginPage() {
                     </a>
                 </div>
             </Card>
-        </div>
     )
 }
 
-export default LoginPage
+export default Login

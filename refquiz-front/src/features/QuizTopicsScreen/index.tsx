@@ -12,7 +12,7 @@ import {
 } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 
-import Button from '../../components/ButtonComponent/StyledButton'
+import Button from '../../components/Button/Button'
 
 const Heading = styled.h2`
   font-size: 32px;
