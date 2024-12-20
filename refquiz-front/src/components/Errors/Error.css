@@ -1,0 +1,3 @@
+.errorContainer {
+    @apply text-red-500 text-xs h-9 flex items-start leading-none;
+  }

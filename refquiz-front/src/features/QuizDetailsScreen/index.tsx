@@ -10,9 +10,9 @@ import {
 } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 import { convertSeconds } from '../../utils/helpers'
+import Button from '../../components/Button/Button'
+import Icon from '../../components/Image/Image'
 
-import Button from '../../components/ButtonComponent/StyledButton'
-import Icon from '../../components/Icons/styledIcons'
 
 const AppTitle = styled.h2`
   font-weight: 700;
@@ -75,7 +75,8 @@ const QuizDetailsScreen = () => {
  
           onClick={goToQuestionScreen}
           
-          ><Icon><StartIcon /></Icon> Start</Button>
+        > Start</Button>
+
       </CenterCardContainer>
     </PageCenter>
   )

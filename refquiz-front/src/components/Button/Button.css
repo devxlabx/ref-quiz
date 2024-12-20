@@ -1,0 +1,7 @@
+  .buttonContainer {
+    @apply flex justify-center items-center rounded-full min-h-[35px] outline outline-1  px-4 py-2 text-center w-[100%] font-normal text-sm  hover:text-white active:scale-95 transition-transform transition-colors;
+  }
+  
+  .buttonDisabled {
+    @apply bg-gray-200 text-gray-500 cursor-not-allowed;
+  }
