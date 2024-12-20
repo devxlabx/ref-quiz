@@ -14,6 +14,7 @@ import Question from './Question'
 import QuizHeader from './QuizHeader'
 import Icon from '../../components/Image/Image'
 
+
 const QuizContainer = styled.div<{ selectedAnswer: boolean }>`
   width: 900px;
   min-height: 500px;
@@ -164,6 +165,7 @@ const QuestionScreen: FC = () => {
             onClick={onClickNext}
             disabled={selectedAnswer.length === 0}
           >{activeQuestion === questions.length - 1 ? 'Finish' : 'Next'}</Button>
+
         </ButtonWrapper>
       </QuizContainer>
       {/* timer or finish quiz modal*/}
