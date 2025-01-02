@@ -3,5 +3,22 @@
   }
   
   .buttonDisabled {
-    @apply bg-gray-200 text-gray-500 cursor-not-allowed;
+    @apply bg-gray-500 text-gray-500 cursor-not-allowed;
   }
+
+  .primary {
+    @apply text-white ;
+  }
+  .secondary {
+    @apply bg-gray-500 text-white hover:bg-gray-600;
+  }
+  .small {
+    @apply text-xs px-2 py-1;
+  }
+  .medium {
+    @apply text-sm px-4 py-2;
+  }
+  .large {
+    @apply text-lg px-6 py-3;
+  }
+

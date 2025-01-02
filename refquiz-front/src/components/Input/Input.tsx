@@ -2,18 +2,13 @@ import React from 'react';
 import './Input.css';
 
 
-interface InputFieldProps {
-  type: string;
-  placeholder: string;
-  value?: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
+interface InputFieldProps extends React.InputHTMLAttributes<any>{
   label: string;
-  onClick?: React.MouseEventHandler<HTMLInputElement>; // Added onClick prop
 }
 
 const InputField: React.FC<InputFieldProps> = ({
   type,
-  placeholder,
+  placeholder = '',
   onChange,
   onClick,  
   label,
