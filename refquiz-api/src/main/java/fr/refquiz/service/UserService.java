@@ -1,10 +1,13 @@
 package fr.refquiz.service;
 
 import fr.refquiz.dto.UserDto;
+import fr.refquiz.model.Role;
 import fr.refquiz.model.User;
+import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
 import jakarta.validation.ValidationException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -12,11 +15,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
@@ -29,34 +35,42 @@ public class UserService {
     }
 
     public UserDto createUser(UserDto userDto) {
+        Role userRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new ValidationException("Role 'USER' doesn't exist"));
+        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
+            throw new ValidationException("Email already exists");
+        }
         if (userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
             throw new ValidationException("Password cannot be null or empty");
         }
+        if (userDto.getValidationPassword() == null || userDto.getValidationPassword().isEmpty() || !userDto.getValidationPassword().equals(userDto.getPassword())) {
+            throw new ValidationException("Validation Password cannot be null or empty and should match Password");
+        }
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = convertToEntity(userDto);
         User savedUser = userRepository.save(user);
+        savedUser.setRoles(List.of(userRole));
         return convertToDto(savedUser);
     }
 
     private UserDto convertToDto(User user) {
         UserDto dto = new UserDto();
         dto.setId(user.getId());
-        dto.setUsername(user.getUsername());
+        dto.setFirstName(user.getFirstName());
+        dto.setLastName(user.getLastName());
         dto.setEmail(user.getEmail());
-        dto.setRole(user.getRole());
         dto.setCreatedAt(user.getCreatedAt());
-        dto.setLastLoginAt(user.getLastLoginAt());
         return dto;
     }
 
     private User convertToEntity(UserDto dto) {
         User user = new User();
-        user.setUsername(dto.getUsername());
+        user.setFirstName(dto.getFirstName());
+        user.setLastName(dto.getLastName());
         user.setPassword(dto.getPassword());
         user.setEmail(dto.getEmail());
-        user.setRole(dto.getRole());
-        user.setCreatedAt(LocalDateTime.now()); // Initialisation ici
+        user.setCreatedAt(LocalDateTime.now());
 
-        // Set other fields if needed
         return user;
     }
 }

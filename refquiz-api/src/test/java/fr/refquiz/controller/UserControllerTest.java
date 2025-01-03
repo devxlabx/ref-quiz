@@ -1,6 +1,5 @@
 package fr.refquiz.controller;
 
-
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,12 +9,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -35,9 +32,9 @@ public class UserControllerTest {
     @Test
     void testGetAllUsers() {
         // Given
-        UserDto user1 = new UserDto(1L, "user1", "user1@example.com", "USER", "pwd", null, null);
-        UserDto user2 = new UserDto(2L, "user2", "user2@example.com", "USER", "pwd2", null, null);
-        List<UserDto> users = Arrays.asList(user1, user2);
+        UserDto user1 = new UserDto(1L, "user1", "user1@example.com", "pwd1", "vpwd1",  null, null);
+        UserDto user2 = new UserDto(2L, "user2", "user2@example.com", "pwd2", "vpwd2",  null, null);
+        List<UserDto> users = List.of(user1, user2);
 
         when(userService.getAllUsers()).thenReturn(users);
 
@@ -45,9 +42,10 @@ public class UserControllerTest {
         ResponseEntity<List<UserDto>> response = userController.getAllUsers();
 
         // Then
-        assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(2, response.getBody().size());
+        assertNotNull(response, "Response should not be null");
+        assertEquals(200, response.getStatusCodeValue(), "Response status should be 200");
+        assertNotNull(response.getBody(), "Response body should not be null");
+        assertEquals(2, response.getBody().size(), "Response body should contain 2 users");
         verify(userService, times(1)).getAllUsers();
     }
 
@@ -55,7 +53,7 @@ public class UserControllerTest {
     void testGetUserById_UserFound() {
         // Given
         Long userId = 1L;
-        UserDto user = new UserDto(userId, "user1", "user1@example.com", "USER", "pwd", null, null);
+        UserDto user = new UserDto(userId, "user1", "user1@example.com", "pwd1", "vpwd1",  null, null);
 
         when(userService.getUserById(userId)).thenReturn(Optional.of(user));
 
@@ -63,19 +61,34 @@ public class UserControllerTest {
         ResponseEntity<UserDto> response = userController.getUserById(userId);
 
         // Then
-        assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(userId, response.getBody().getId());
+        assertNotNull(response, "Response should not be null");
+        assertEquals(200, response.getStatusCodeValue(), "Response status should be 200");
+        assertNotNull(response.getBody(), "Response body should not be null");
+        assertEquals(userId, response.getBody().getId(), "User ID should match");
         verify(userService, times(1)).getUserById(userId);
     }
 
+    @Test
+    void testGetUserById_UserNotFound() {
+        // Given
+        Long userId = 1L;
 
+        when(userService.getUserById(userId)).thenReturn(Optional.empty());
+
+        // When
+        ResponseEntity<UserDto> response = userController.getUserById(userId);
+
+        // Then
+        assertNotNull(response, "Response should not be null");
+        assertEquals(404, response.getStatusCodeValue(), "Response status should be 404");
+        verify(userService, times(1)).getUserById(userId);
+    }
 
     @Test
     void testCreateUser() {
         // Given
-        UserDto userToCreate = new UserDto(null, "user1", "user1@example.com", "USER", "pwd", null, null);
-        UserDto createdUser = new UserDto(1L, "user1", "user1@example.com", "USER", "pwd2", null, null);
+        UserDto userToCreate = new UserDto(null, "user1", "user1", "user1@example.com", "pwd1", "vpwd1", null);
+        UserDto createdUser = new UserDto(1L, "user1", "user1","user1@example.com", "pwd1", "vpwd1", null);
 
         when(userService.createUser(any(UserDto.class))).thenReturn(createdUser);
 
@@ -83,10 +96,11 @@ public class UserControllerTest {
         ResponseEntity<UserDto> response = userController.createUser(userToCreate);
 
         // Then
-        assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
-        assertEquals(createdUser.getId(), response.getBody().getId());
-        assertEquals(createdUser.getUsername(), response.getBody().getUsername());
+        assertNotNull(response, "Response should not be null");
+        assertEquals(201, response.getStatusCodeValue(), "Response status should be 201");
+        assertNotNull(response.getBody(), "Response body should not be null");
+        assertEquals(createdUser.getId(), response.getBody().getId(), "Created user ID should match");
+        assertEquals(createdUser.getEmail(), response.getBody().getEmail(), "Created user username should match");
         verify(userService, times(1)).createUser(any(UserDto.class));
     }
 }
