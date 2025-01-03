@@ -10,8 +10,6 @@ import {
 } from '../../styles/Global'
 import { ScreenTypes } from '../../types'
 import { convertSeconds } from '../../utils/helpers'
-import Button from '../../components/Button/Button'
-import Icon from '../../components/Image/Image'
 
 import Button from '../../components/Button/Button'
 import Icon from '../../components/Image/Image'
