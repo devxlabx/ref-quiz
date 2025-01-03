@@ -1,0 +1,24 @@
+  .buttonContainer {
+    @apply flex justify-center items-center rounded-full min-h-[35px] outline outline-1  px-4 py-2 text-center w-[100%] font-normal text-sm  hover:text-white active:scale-95 transition-transform transition-colors;
+  }
+  
+  .buttonDisabled {
+    @apply bg-gray-500 text-gray-500 cursor-not-allowed;
+  }
+
+  .primary {
+    @apply text-white ;
+  }
+  .secondary {
+    @apply bg-gray-500 text-white hover:bg-gray-600;
+  }
+  .small {
+    @apply text-xs px-2 py-1;
+  }
+  .medium {
+    @apply text-sm px-4 py-2;
+  }
+  .large {
+    @apply text-lg px-6 py-3;
+  }
+
