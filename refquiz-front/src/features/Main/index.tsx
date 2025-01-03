@@ -13,7 +13,6 @@ import RegisterScreen from '../Register/Register'
 import LoginPage from '../../pages/LoginPage'
 import RegisterPage from '../../pages/RegisterPage'
 
-
 function Main() {
   const { currentScreen, setCurrentScreen } = useQuiz()
 
@@ -31,7 +30,6 @@ function Main() {
     [ScreenTypes.ResultScreen]: <ResultScreen />,
     [ScreenTypes.LoginPage]: <LoginPage />,
     [ScreenTypes.RegisterPage]: <RegisterPage />,
-
 
   }
 

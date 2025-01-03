@@ -8,13 +8,11 @@ import { Flex, LogoContainer, ResizableBox } from '../../styles/Global'
 import { refreshPage } from '../../utils/helpers'
 
 import Button from '../../components/Button/Button'
-
 import CodeSnippet from '../../components/CodeSnippet'
 import QuizImage from '../../components/QuizImage'
 import ResultOverview from './ResultOverview'
 import RightAnswer from './RightAnswer'
 import Icon from '../../components/Image/Image'
-
 
 const ResultScreenContainer = styled.div`
   max-width: 900px;
@@ -193,7 +191,6 @@ const ResultScreen: FC = () => {
           
           onClick={onClickRetry}
         >RETRY </Button>
-
       </Flex>
     </ResultScreenContainer>
   )

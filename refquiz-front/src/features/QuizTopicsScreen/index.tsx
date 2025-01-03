@@ -14,7 +14,6 @@ import { ScreenTypes } from '../../types'
 
 import Button from '../../components/Button/Button'
 
-
 const Heading = styled.h2`
   font-size: 32px;
   font-weight: 700;

@@ -13,6 +13,8 @@ import { convertSeconds } from '../../utils/helpers'
 import Button from '../../components/Button/Button'
 import Icon from '../../components/Image/Image'
 
+import Button from '../../components/Button/Button'
+import Icon from '../../components/Image/Image'
 
 const AppTitle = styled.h2`
   font-weight: 700;
@@ -76,7 +78,6 @@ const QuizDetailsScreen = () => {
           onClick={goToQuestionScreen}
           
         > Start</Button>
-
       </CenterCardContainer>
     </PageCenter>
   )
