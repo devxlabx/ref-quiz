@@ -3,6 +3,7 @@ package fr.refquiz.controller;
 import fr.refquiz.configuration.exception.ResourceNotFoundException;
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,10 +15,11 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/users")
 @Validated
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+
+    private final UserService userService;
 
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
