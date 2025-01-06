@@ -26,11 +26,24 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(withDefaults())
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req->
                         req.requestMatchers(
                                         "/users/**",
                                         "/**",
-                                        "/h2-console/**"//to allow h2-database
+                                        "/h2-console/**",//to allow h2-database
+                                        "/v2/api-docs",
+                                        "/v3/api-docs",
+                                        "/v2/api-docs/**",
+                                        "/v3/api-docs/swagger-config",
+                                        "/swagger-resources",
+                                        "/swagger-resources/**",
+                                        "/configuration/ui",
+                                        "/configuration/security",
+                                        "/swagger-ui/**",
+                                        "/swagger-ui/index.html",
+                                        "/webjars/**",
+                                        "swagger-ui.html"
                                 ).permitAll()
                                 .anyRequest()
                                 .authenticated()
