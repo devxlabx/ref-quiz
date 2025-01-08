@@ -1,5 +1,6 @@
 package fr.refquiz.controller;
 
+import fr.refquiz.configuration.exception.ResourceNotFoundException;
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -72,17 +73,21 @@ public class UserControllerTest {
     void testGetUserById_UserNotFound() {
         // Given
         Long userId = 1L;
-
         when(userService.getUserById(userId)).thenReturn(Optional.empty());
 
         // When
-        ResponseEntity<UserDto> response = userController.getUserById(userId);
+        ResourceNotFoundException exception = assertThrows(
+                ResourceNotFoundException.class,
+                () -> userController.getUserById(userId),
+                "Expected ResourceNotFoundException to be thrown"
+        );
 
         // Then
-        assertNotNull(response, "Response should not be null");
-        assertEquals(404, response.getStatusCodeValue(), "Response status should be 404");
+        assertNotNull(exception, "Exception should not be null");
+        assertEquals("User not found with id: 1", exception.getMessage());
         verify(userService, times(1)).getUserById(userId);
     }
+
 
     @Test
     void testCreateUser() {

@@ -6,7 +6,6 @@ import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -15,7 +14,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.Validator;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -71,64 +69,19 @@ public class UserController {
     @PostMapping
     @Operation(
             summary = "Create a new user",
-            description = "Add a new user to the system",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User data for creating a new user",
-                    required = true,
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = UserDto.class),
-                            examples = @ExampleObject(
-                                    name = "Example User",
-                                    summary = "An example of a valid user creation request",
-                                    description = "This is an example payload for creating a new user",
-                                    value = "{\n" +
-                                            "  \"firstName\": \"John\",\n" +
-                                            "  \"lastName\": \"Doe\",\n" +
-                                            "  \"email\": \"jdoe1@example.com\",\n" +
-                                            "  \"password\": \"********\",\n" +
-                                            "  \"validationPassword\": \"*******\"\n" +
-                                            "}"
-                            )
-                    )
-            )
+            description = "Add a new user to the system"
     )
     @ApiResponses(value = {
-            @ApiResponse(
-                    responseCode = "201",
-                    description = "User created successfully",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = UserDto.class),
-                            examples = @ExampleObject(
-                                    name = "Example User",
-                                    summary = "An example of a valid user creation request",
-                                    description = "This is an example payload for creating a new user",
-                                    value = "{\n" +
-                                            "  \"firstName\": \"John\",\n" +
-                                            "  \"lastName\": \"Doe\",\n" +
-                                            "  \"email\": \"jdoe1@example.com\",\n" +
-                                            "  \"password\": \"********\",\n" +
-                                            "  \"validationPassword\": \"*******\"\n" +
-                                            "}"
-                            )
-                    )
-            ),
+            @ApiResponse(responseCode = "201", description = "User created successfully"),
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid input",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)
-                    )
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             ),
             @ApiResponse(
                     responseCode = "500",
                     description = "Internal server error",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class)
-                    )
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))
             )
     })
     public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
