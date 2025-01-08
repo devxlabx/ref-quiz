@@ -33,7 +33,7 @@ public class User {
     private String password;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String statut = "ACTIVE";
+    private String statut = "NOT_ACTIVE";
     @ManyToMany
     @JoinTable(
             name = "user_roles",

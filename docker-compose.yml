@@ -1,0 +1,34 @@
+services:
+
+  postgres:
+    container_name: postgres-sql-refquiz
+    image: postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      GDATA: /var/lib/postgresql/data
+      POSTGRES_DB: refquiz_db
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    networks:
+      - refquiz-api-network
+    restart: unless-stopped
+
+  mail-dev:
+    container_name: mail-dev-refquiz
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+
+networks:
+  refquiz-api-network:
+    driver: bridge
+
+
+
+volumes:
+  postgres:
+    driver: local
