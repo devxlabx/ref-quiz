@@ -5,8 +5,11 @@ import fr.refquiz.model.Role;
 import fr.refquiz.model.User;
 import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +26,23 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    @Value("${app.activation-url}")
+    private String activationUrl;
+
+
+
+    public void sendValidationEmail(User user) throws MessagingException {
+        String activationLink = activationUrl + user.getEmail();
+        emailService.sendEmail(
+                user.getEmail(),
+                user.getFirstName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationLink,
+                "Activation du compte"
+        );
+
+    }
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
@@ -34,7 +54,7 @@ public class UserService {
         return userRepository.findById(id).map(this::convertToDto);
     }
 
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) throws MessagingException {
         Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new ValidationException("Role 'USER' doesn't exist"));
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
@@ -50,6 +70,7 @@ public class UserService {
         User user = convertToEntity(userDto);
         User savedUser = userRepository.save(user);
         savedUser.setRoles(List.of(userRole));
+        sendValidationEmail(user);
         return convertToDto(savedUser);
     }
 
@@ -72,5 +93,10 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
 
         return user;
+    }
+    public void activateAccount(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ValidationException("Email doesn't exist"));
+        user.setStatut("ACTIVATED");
+        userRepository.save(user);
     }
 }
