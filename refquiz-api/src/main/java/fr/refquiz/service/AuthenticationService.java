@@ -42,6 +42,7 @@ public class AuthenticationService {
         var claims = new HashMap<String,Object>();
         var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.getName());
+        claims.put("roles", user.getRoles());
         var jwtToken = jwtService.generateToken(
                 claims,
                 user,

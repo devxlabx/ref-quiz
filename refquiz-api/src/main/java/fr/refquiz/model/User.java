@@ -48,7 +48,7 @@ public class User implements UserDetails, Principal {
             inverseJoinColumns = @JoinColumn(name = "role_id"
             )
     )
-    private List<Role> roles ;
+    private List<Role> roles;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();

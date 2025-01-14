@@ -23,7 +23,7 @@ public class AuthenticationRequest {
     @Size(min = 8, message = "Password must be at least 8 characters long")
     @Schema(
             description = "Password for the user account",
-            example = "********",
+            example = "Pa$$w0rd",
             accessMode = Schema.AccessMode.WRITE_ONLY
     )
     private String password;
