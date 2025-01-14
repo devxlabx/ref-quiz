@@ -68,7 +68,7 @@ public class UserController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = "{ \"status\": 404, \"errorCode\": \"USER_NOT_FOUND\", \"message\": \"User not found with the given ID\" }")
+                            examples = @ExampleObject(value = "{ \"status\": 404, \"errorCode\": \"NOT_FOUND\", \"message\": \"User not found with the given ID\" }")
                     )
             ),
             @ApiResponse(
@@ -87,34 +87,5 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
-    @PostMapping
-    @Operation(
-            summary = "Create a new user",
-            description = "Add a new user to the system"
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "User created successfully"),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Invalid input",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = "{ \"status\": 400, \"errorCode\": \"BAD_REQUEST\", \"message\": \"Invalid input data provided\" }")
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "500",
-                    description = "Internal server error",
-                    content = @Content(
-                            mediaType = "application/json",
-                            schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = "{ \"status\": 500, \"errorCode\": \"INTERNAL_SERVER_ERROR\", \"message\": \"An unexpected error occurred\" }")
-                    )
-            )
-    })
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
-        UserDto createdUser = userService.createUser(userDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-    }
+
 }
