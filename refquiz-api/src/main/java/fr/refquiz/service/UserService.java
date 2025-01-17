@@ -5,6 +5,7 @@ import fr.refquiz.model.Role;
 import fr.refquiz.model.User;
 import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,7 +30,7 @@ public class UserService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     public Optional<UserDto> getUserById(Long id) {
         return userRepository.findById(id).map(this::convertToDto);
     }

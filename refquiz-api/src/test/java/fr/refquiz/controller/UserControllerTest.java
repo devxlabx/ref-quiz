@@ -24,6 +24,7 @@ public class UserControllerTest {
 
     @InjectMocks
     private UserController userController;
+    private AuthenticationController authController;
 
     @BeforeEach
     void setUp() {
@@ -98,7 +99,7 @@ public class UserControllerTest {
         when(userService.createUser(any(UserDto.class))).thenReturn(createdUser);
 
         // When
-        ResponseEntity<UserDto> response = userController.createUser(userToCreate);
+        ResponseEntity<UserDto> response = authController.createUser(userToCreate);
 
         // Then
         assertNotNull(response, "Response should not be null");
