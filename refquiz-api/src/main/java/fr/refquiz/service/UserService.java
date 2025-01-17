@@ -68,10 +68,11 @@ public class UserService {
         }
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = convertToEntity(userDto);
+        user.setRoles(List.of(userRole));
         User savedUser = userRepository.save(user);
-        savedUser.setRoles(List.of(userRole));
         sendValidationEmail(user);
         return convertToDto(savedUser);
+
     }
 
     private UserDto convertToDto(User user) {
