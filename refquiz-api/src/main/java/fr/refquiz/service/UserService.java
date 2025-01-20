@@ -50,7 +50,7 @@ public class UserService {
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
-
+    @Transactional
     public Optional<UserDto> getUserById(Long id) {
         return userRepository.findById(id).map(this::convertToDto);
     }

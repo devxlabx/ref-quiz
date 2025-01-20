@@ -70,7 +70,7 @@ public class UserController {
                     content = @Content(
                             mediaType = "application/json",
                             schema = @Schema(implementation = ErrorResponse.class),
-                            examples = @ExampleObject(value = "{ \"status\": 404, \"errorCode\": \"USER_NOT_FOUND\", \"message\": \"User not found with the given ID\" }")
+                            examples = @ExampleObject(value = "{ \"status\": 404, \"errorCode\": \"NOT_FOUND\", \"message\": \"User not found with the given ID\" }")
                     )
             ),
             @ApiResponse(
@@ -126,4 +126,5 @@ public class UserController {
             userService.activateAccount(uuid);
         return ResponseEntity.ok("Compte activé avec succés");
     }
+
 }
