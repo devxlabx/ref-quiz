@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
@@ -20,10 +21,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(unique = true, nullable = false)
+    private String uuid = UUID.randomUUID().toString();
+
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @Column(nullable = false, unique = true, length = 100)
@@ -33,7 +37,7 @@ public class User {
     private String password;
 
     @Column(nullable = false, unique = true, length = 50)
-    private String statut = "NOT_ACTIVE";
+    private boolean status = false;
     @ManyToMany
     @JoinTable(
             name = "user_roles",
@@ -42,9 +46,9 @@ public class User {
     )
     private List<Role> roles;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "creation_date", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "last_login_at")
+    @Column(name = "last_connexion")
     private LocalDateTime lastLoginAt;
 }

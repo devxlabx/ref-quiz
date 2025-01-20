@@ -6,6 +6,7 @@ import fr.refquiz.model.User;
 import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,7 @@ public class UserService {
 
 
     public void sendValidationEmail(User user) throws MessagingException {
-        String activationLink = activationUrl + user.getEmail();
+        String activationLink = activationUrl + user.getUuid();
         emailService.sendEmail(
                 user.getEmail(),
                 user.getFirstName(),
@@ -95,9 +96,9 @@ public class UserService {
 
         return user;
     }
-    public void activateAccount(String email) {
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ValidationException("Email doesn't exist"));
-        user.setStatut("ACTIVATED");
+    public void activateAccount(String uuid) {
+        User user = userRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException("User with uuid '" + uuid + "' not found"));
+        user.setStatus(true);
         userRepository.save(user);
     }
 }

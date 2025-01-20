@@ -122,8 +122,8 @@ public class UserController {
     }
 
     @GetMapping("/activate-account")
-    public ResponseEntity<String> activateUser(@RequestParam("email") String email) throws MessagingException {
-            userService.activateAccount(email);
+    public ResponseEntity<String> activateUser(@RequestParam("uuid") String uuid) throws MessagingException {
+            userService.activateAccount(uuid);
         return ResponseEntity.ok("Compte activé avec succés");
     }
 }
