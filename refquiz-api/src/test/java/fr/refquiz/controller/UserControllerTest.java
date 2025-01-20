@@ -3,6 +3,7 @@ package fr.refquiz.controller;
 import fr.refquiz.configuration.exception.ResourceNotFoundException;
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
+import jakarta.mail.MessagingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -91,7 +92,7 @@ public class UserControllerTest {
 
 
     @Test
-    void testCreateUser() {
+    void testCreateUser() throws MessagingException {
         // Given
         UserDto userToCreate = new UserDto(null, "user1", "user1", "user1@example.com", "pwd1", "vpwd1", null);
         UserDto createdUser = new UserDto(1L, "user1", "user1","user1@example.com", "pwd1", "vpwd1", null);
