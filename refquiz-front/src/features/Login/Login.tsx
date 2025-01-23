@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useQuiz } from '../../context/QuizContext'
-import { ScreenTypes } from '../../types'
 import { validateEmailInput } from '../../utils/helpers'
 import InputField from '../../components/Input/Input'
 import Card from '../../components/Card/Card'
@@ -8,13 +7,28 @@ import Error from '../../components/Errors/Error'
 import Button from '../../components/Button/Button'
 import { useNavigate } from 'react-router-dom' // Import useNavigate
 import './Login.css';
+import {useAuth} from "../../context/AuthProvider";
 
 function Login() {
+    const { login } = useAuth();
     const { setCurrentScreen } = useQuiz();
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-    const navigate = useNavigate(); // Instanciation du navigate
+    const navigate = useNavigate();
+    const [apiError, setApiError] = useState<string | null>(null);
+
+
+    const submitData = async () => {
+        if (Object.values(errors).every((err) => err === '')) {
+            try {
+                await login(email, password);
+                navigate('/topics');
+            } catch (error: any) {
+                setApiError(error.message || 'Une erreur est survenue lors de l\'authentification.');
+            }
+        }
+    };
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -38,10 +52,6 @@ function Login() {
         setPassword(e.target.value);
     };
 
-    const goToQuizTopicsScreen = (e: React.FormEvent) => {
-        e.preventDefault();
-        navigate('/topics'); // Utilisation du navigate pour rediriger vers /register
-    };
 
     const goToRegisterScreen = () => {
         navigate('/register'); // Utilisation du navigate pour rediriger vers /register
@@ -66,10 +76,9 @@ function Login() {
                 onChange={handlePasswordChange}
                 onClick={removePlaceHolder}
             />
-            <Error>{errors.email && errors.email}</Error>
 
             <div className="button-container">
-                <Button onClick={goToQuizTopicsScreen}>CONNEXION</Button>
+                <Button onClick={submitData}>CONNEXION</Button>
             </div>
 
             <div className="link-container">

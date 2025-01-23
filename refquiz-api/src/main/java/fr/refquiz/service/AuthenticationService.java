@@ -6,6 +6,7 @@ import fr.refquiz.authentication.AuthenticationResponse;
 import fr.refquiz.model.Token;
 import fr.refquiz.model.TokenType;
 import fr.refquiz.model.User;
+import fr.refquiz.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,6 +30,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserDetailsServiceImpl userDetailsService;
+    private final UserRepository userRepository;
 
     public AuthenticationResponse authenticate(
             @NonNull @Valid AuthenticationRequest req,
@@ -41,6 +44,8 @@ public class AuthenticationService {
         );
         var claims = new HashMap<String,Object>();
         var user = ((User) auth.getPrincipal());
+        user.setLastLoginAt(LocalDateTime.now());
+        userRepository.save(user);
         claims.put("fullName", user.getName());
         claims.put("roles", user.getRoles());
         var jwtToken = jwtService.generateToken(

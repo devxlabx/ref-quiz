@@ -12,19 +12,13 @@ import { themes } from './styles/Theme'
 import LoginPage from "./pages/LoginPage";
 import QuizTopicsScreen from "./features/QuizTopicsScreen";
 import RegisterPage from "./pages/RegisterPage";
+import PrivateRoute from "./services/PrivateRoute";
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState(() => {
     const savedTheme = localStorage.getItem('theme')
     return savedTheme || 'light'
   })
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    const authToken = Cookies.get('authToken')
-    setIsAuthenticated(!!authToken)
-  }, [])
 
   const toggleTheme = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = e.target
@@ -47,33 +41,32 @@ function App() {
                 value="theme"
             />
             <Routes>
-              {/* Route principale avec redirection basée sur l'état d'authentification */}
-              <Route
-                  path="/"
-                  element={
-                    isAuthenticated ? (
-                        <Navigate to="/main" replace />
-                    ) : (
-                        <Navigate to="/login" replace />
-                    )
-                  }
-              />
+                    {/* Route principale avec redirection basée sur l'état d'authentification */}
+                    <Route path="/" element={<Navigate to="/main" replace />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
 
-              {/* Route vers la page de connexion */}
-              <Route path="/login" element={<LoginPage />} />
-                {/* Route vers la page de création d'un compte */}
-               <Route path="/register" element={<RegisterPage />} />
+                    {/* Routes protégées */}
+                    <Route
+                        path="/main"
+                        element={
+                            <PrivateRoute>
+                                <Main />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/topics"
+                        element={
+                            <PrivateRoute>
+                                <QuizTopicsScreen />
+                            </PrivateRoute>
+                        }
+                    />
 
-              {/* Route principale après connexion */}
-              <Route path="/main" element={<Main />} />
-
-              {/* Route vers l'écran des sujets de quiz */}
-              <Route path="/topics" element={<QuizTopicsScreen />} />
-
-              {/* Route par défaut pour les pages non trouvées */}
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-
+                    {/* Redirection par défaut */}
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
           </Router>
         </QuizProvider>
       </ThemeProvider>
