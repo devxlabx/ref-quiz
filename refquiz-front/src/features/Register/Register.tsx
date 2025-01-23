@@ -13,6 +13,7 @@ import Card from '../../components/Card/Card';
 import Error from '../../components/Errors/Error';
 import './Register.css';
 import UserService from '../../services/UserService';
+import {useNavigate} from "react-router-dom";
 
 function Register() {
   const { setCurrentScreen } = useQuiz();
@@ -23,10 +24,12 @@ function Register() {
   const [matchedPassword, setMatchedPassword] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const [apiError, setApiError] = useState<string | null>(null); 
-  
+  const [apiError, setApiError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
-  const userService = new UserService('http://localhost:8080'); 
+
+
+    const userService = new UserService('http://localhost:8080/api/v1/auth');
 
   const removePlaceHolder = (e: React.MouseEvent<HTMLInputElement>) => {
     e.currentTarget.placeholder = '';
@@ -58,14 +61,14 @@ function Register() {
           password: password,
           validationPassword:matchedPassword
         });
-        setCurrentScreen(ScreenTypes.LoginPage);
+          navigate('/login');
       } catch (error: any) {
         setApiError(error.message || 'Une erreur est survenue lors de la création du compte.');
       }
     }
   };
 
-  const goToLoginScreen = () => setCurrentScreen(ScreenTypes.LoginPage);
+  const goToLoginScreen = () => navigate('/login');
 
   return (
     <Card className="card">
