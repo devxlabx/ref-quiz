@@ -4,6 +4,8 @@ import fr.refquiz.configuration.exception.ErrorResponse;
 import fr.refquiz.configuration.exception.ResourceNotFoundException;
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.service.UserService;
+import jakarta.mail.MessagingException;
+import lombok.RequiredArgsConstructor;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
@@ -87,5 +89,42 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
+    @PostMapping
+    @Operation(
+            summary = "Create a new user",
+            description = "Add a new user to the system"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "User created successfully"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid input",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = "{ \"status\": 400, \"errorCode\": \"BAD_REQUEST\", \"message\": \"Invalid input data provided\" }")
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = "{ \"status\": 500, \"errorCode\": \"INTERNAL_SERVER_ERROR\", \"message\": \"An unexpected error occurred\" }")
+                    )
+            )
+    })
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) throws MessagingException {
+
+        UserDto createdUser = userService.createUser(userDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    }
+
+    @GetMapping("/activate-account")
+    public ResponseEntity<String> activateUser(@RequestParam("emailHash") String emailHash) throws MessagingException {
+            userService.activateAccount(emailHash);
+        return ResponseEntity.ok("Compte activé avec succés");
+    }
 
 }

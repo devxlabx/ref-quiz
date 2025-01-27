@@ -17,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -64,7 +65,7 @@ public class AuthenticationController {
                     )
             )
     })
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) throws MessagingException {
         UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -160,6 +161,7 @@ public class AuthenticationController {
         authService.logout(req, res);
         return ResponseEntity.status(HttpStatus.OK).body("User logged out successfully");
     }
+
     @GetMapping("/user")
     @Operation(
             summary = "Get authenticated user information",
@@ -196,6 +198,13 @@ public class AuthenticationController {
         UserResponse user = jwtService.getUserFromToken(token);
 
         return ResponseEntity.ok(user);
+    }
+
+
+    @GetMapping("/activate-account")
+    public ResponseEntity<String> activateUser(@RequestParam("emailHash") String emailHash) throws MessagingException {
+        userService.activateAccount(emailHash);
+        return ResponseEntity.ok("Compte activé avec succés");
     }
 
 }
