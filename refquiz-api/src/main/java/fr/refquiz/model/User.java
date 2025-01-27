@@ -1,6 +1,5 @@
 package fr.refquiz.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +13,7 @@ import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,10 +27,13 @@ public class User implements UserDetails, Principal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "email_hash", unique = true, nullable = false)
+    private String emailHash = UUID.randomUUID().toString();
+
+    @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
 
-    @Column(nullable = false, length = 50)
+    @Column(name = "last_name", nullable = false, length = 50)
     private String lastName;
 
     @Column(nullable = false, unique = true, length = 100)
@@ -39,8 +42,9 @@ public class User implements UserDetails, Principal {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private String statut = "ACTIVE";
+    @Enumerated(EnumType.STRING)
+    private AccountStatus status ;
+ 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",
@@ -50,10 +54,10 @@ public class User implements UserDetails, Principal {
     )
     private List<Role> roles;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "creation_date", nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "last_login_at")
+    @Column(name = "last_connexion")
     private LocalDateTime lastLoginAt;
 
     @Override
@@ -65,37 +69,19 @@ public class User implements UserDetails, Principal {
     public String getUsername() {
         return email;
     }
+
     @Override
     public String getPassword() {
         return password;
     }
 
 
-    /**
-     * Returns the name of this {@code Principal}.
-     *
-     * @return the name of this {@code Principal}.
-     */
     @Override
     public String getName() {
         return firstName + " " + lastName;
     }
 
-    /**
-     * Returns {@code true} if the specified subject is implied by this
-     * {@code Principal}.
-     *
-     * @param subject the {@code Subject}
-     * @return {@code true} if {@code subject} is non-null and is
-     * implied by this {@code Principal}, or false otherwise.
-     * @implSpec The default implementation of this method returns {@code true} if
-     * {@code subject} is non-null and contains at least one
-     * {@code Principal} that is equal to this {@code Principal}.
-     *
-     * <p>Subclasses may override this with a different implementation, if
-     * necessary.
-     * @since 1.8
-     */
+
     @Override
     public boolean implies(Subject subject) {
         return Principal.super.implies(subject);

@@ -1,13 +1,13 @@
 -- Table "users"
 CREATE TABLE users (
                        id BIGSERIAL PRIMARY KEY,
-                       uuid VARCHAR(50) NOT NULL UNIQUE,
+                       email_hash VARCHAR(50) NOT NULL UNIQUE,
                        first_name VARCHAR(50) NOT NULL,
                        last_name VARCHAR(50) NOT NULL,
                        email VARCHAR(50) NOT NULL UNIQUE,
                        password VARCHAR(125) NOT NULL,
                        creation_date DATE NOT NULL DEFAULT CURRENT_DATE,
-                       status BOOLEAN NOT NULL ,
+                       status VARCHAR(50) NOT NULL,
                        last_connexion DATE
 );
 

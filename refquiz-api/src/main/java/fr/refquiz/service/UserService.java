@@ -2,12 +2,16 @@ package fr.refquiz.service;
 
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.model.Role;
+import fr.refquiz.model.AccountStatus;
 import fr.refquiz.model.User;
 import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +28,23 @@ public class UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    @Value("${app.activation-url}")
+    private String activationUrl;
+
+
+
+    public void sendValidationEmail(User user) throws MessagingException {
+        String activationLink = activationUrl + user.getEmailHash();
+        emailService.sendEmail(
+                user.getEmail(),
+                user.getFirstName(),
+                EmailTemplateName.ACTIVATE_ACCOUNT,
+                activationLink,
+                "Activation du compte"
+        );
+
+    }
 
     public List<UserDto> getAllUsers() {
         return userRepository.findAll().stream()
@@ -35,7 +56,7 @@ public class UserService {
         return userRepository.findById(id).map(this::convertToDto);
     }
 
-    public UserDto createUser(UserDto userDto) {
+    public UserDto createUser(UserDto userDto) throws MessagingException {
         Role userRole = roleRepository.findByName("USER")
                 .orElseThrow(() -> new ValidationException("Role 'USER' doesn't exist"));
         if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
@@ -50,8 +71,11 @@ public class UserService {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = convertToEntity(userDto);
         user.setRoles(List.of(userRole));
-        userRepository.save(user);
-        return convertToDto(user);
+        user.setStatus(AccountStatus.PENDING);
+        User savedUser = userRepository.save(user);
+        sendValidationEmail(user);
+        return convertToDto(savedUser);
+
     }
 
     private UserDto convertToDto(User user) {
@@ -73,5 +97,10 @@ public class UserService {
         user.setCreatedAt(LocalDateTime.now());
 
         return user;
+    }
+    public void activateAccount(String emailHash) {
+        User user = userRepository.findByEmailHash(emailHash).orElseThrow(() -> new EntityNotFoundException("User with emailHash '" + emailHash + "' not found"));
+        user.setStatus(AccountStatus.VALIDATED);
+        userRepository.save(user);
     }
 }
