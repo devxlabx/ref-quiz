@@ -1,6 +1,6 @@
 package fr.refquiz.model;
 
-public enum Status {
+public enum AccountStatus {
     PENDING,
     VALIDATED,
     DEACTIVATED
