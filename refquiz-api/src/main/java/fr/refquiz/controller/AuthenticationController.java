@@ -4,7 +4,10 @@ import fr.refquiz.authentication.AuthenticationRequest;
 import fr.refquiz.authentication.AuthenticationResponse;
 import fr.refquiz.configuration.exception.ErrorResponse;
 import fr.refquiz.dto.UserDto;
+import fr.refquiz.dto.UserResponse;
+import fr.refquiz.model.User;
 import fr.refquiz.service.AuthenticationService;
+import fr.refquiz.service.JwtService;
 import fr.refquiz.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,6 +37,7 @@ public class AuthenticationController {
 
     private final AuthenticationService authService;
     private final UserService userService;
+    private final JwtService jwtService;
 
     @PostMapping("/create-user")
     @Operation(
@@ -157,9 +161,50 @@ public class AuthenticationController {
         authService.logout(req, res);
         return ResponseEntity.status(HttpStatus.OK).body("User logged out successfully");
     }
+
+    @GetMapping("/user")
+    @Operation(
+            summary = "Get authenticated user information",
+            description = "Fetch the details of the authenticated user using the JWT token from cookies."
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User information retrieved successfully",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponse.class),
+                            examples = @ExampleObject(value = "{ \"id\": 1, \"firstName\": \"John\", \"lastName\": \"Doe\", \"email\": \"john.doe@example.com\", \"roles\": [\"ROLE_USER\"] }")
+                    )
+            ),
+            @ApiResponse(responseCode = "401", description = "Unauthorized - Invalid or expired token",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = "{ \"status\": 401, \"errorCode\": \"UNAUTHORIZED\", \"message\": \"Token is missing or expired\" }")
+                    )
+            ),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = "{ \"status\": 500, \"errorCode\": \"INTERNAL_SERVER_ERROR\", \"message\": \"An unexpected error occurred\" }")
+                    )
+            )
+    })
+    public ResponseEntity<UserResponse> getUserInfo(HttpServletRequest request) {
+        String token = jwtService.getAuthTokenFromCookies(request);
+        if (token == null || jwtService.isTokenExpired(token)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+        UserResponse user = jwtService.getUserFromToken(token);
+
+        return ResponseEntity.ok(user);
+    }
+
+
     @GetMapping("/activate-account")
     public ResponseEntity<String> activateUser(@RequestParam("emailHash") String emailHash) throws MessagingException {
         userService.activateAccount(emailHash);
         return ResponseEntity.ok("Compte activé avec succés");
     }
+
 }
