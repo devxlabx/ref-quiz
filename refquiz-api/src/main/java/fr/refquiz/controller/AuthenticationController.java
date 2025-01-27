@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nonnull;
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -21,10 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -37,7 +35,7 @@ public class AuthenticationController {
     private final AuthenticationService authService;
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping("/create-user")
     @Operation(
             summary = "Create a new user",
             description = "Add a new user to the system"
@@ -63,7 +61,7 @@ public class AuthenticationController {
                     )
             )
     })
-    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto) throws MessagingException {
         UserDto createdUser = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
@@ -158,5 +156,10 @@ public class AuthenticationController {
     ) {
         authService.logout(req, res);
         return ResponseEntity.status(HttpStatus.OK).body("User logged out successfully");
+    }
+    @GetMapping("/activate-account")
+    public ResponseEntity<String> activateUser(@RequestParam("emailHash") String emailHash) throws MessagingException {
+        userService.activateAccount(emailHash);
+        return ResponseEntity.ok("Compte activé avec succés");
     }
 }

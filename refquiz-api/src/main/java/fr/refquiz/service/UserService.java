@@ -34,7 +34,7 @@ public class UserService {
 
 
     public void sendValidationEmail(User user) throws MessagingException {
-        String activationLink = activationUrl + user.getUuid();
+        String activationLink = activationUrl + user.getEmailHash();
         emailService.sendEmail(
                 user.getEmail(),
                 user.getFirstName(),
@@ -96,9 +96,9 @@ public class UserService {
 
         return user;
     }
-    public void activateAccount(String uuid) {
-        User user = userRepository.findByUuid(uuid).orElseThrow(() -> new EntityNotFoundException("User with uuid '" + uuid + "' not found"));
-        user.setStatus(true);
+    public void activateAccount(String emailHash) {
+        User user = userRepository.findByEmailHash(emailHash).orElseThrow(() -> new EntityNotFoundException("User with emailHash '" + emailHash + "' not found"));
+        user.setStatus("ACTIVE");
         userRepository.save(user);
     }
 }

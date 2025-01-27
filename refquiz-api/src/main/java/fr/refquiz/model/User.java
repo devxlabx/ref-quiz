@@ -28,8 +28,8 @@ public class User implements UserDetails, Principal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
-    private String uuid = UUID.randomUUID().toString();
+    @Column(name = "email_hash", unique = true, nullable = false)
+    private String emailHash = UUID.randomUUID().toString();
 
     @Column(name = "first_name", nullable = false, length = 50)
     private String firstName;
@@ -43,8 +43,8 @@ public class User implements UserDetails, Principal {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, unique = true, length = 50)
-    private boolean status = false;
+    @Column(nullable = false, length = 50)
+    private String status = "DEACTIVATED";
  
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -70,37 +70,19 @@ public class User implements UserDetails, Principal {
     public String getUsername() {
         return email;
     }
+
     @Override
     public String getPassword() {
         return password;
     }
 
 
-    /**
-     * Returns the name of this {@code Principal}.
-     *
-     * @return the name of this {@code Principal}.
-     */
     @Override
     public String getName() {
         return firstName + " " + lastName;
     }
 
-    /**
-     * Returns {@code true} if the specified subject is implied by this
-     * {@code Principal}.
-     *
-     * @param subject the {@code Subject}
-     * @return {@code true} if {@code subject} is non-null and is
-     * implied by this {@code Principal}, or false otherwise.
-     * @implSpec The default implementation of this method returns {@code true} if
-     * {@code subject} is non-null and contains at least one
-     * {@code Principal} that is equal to this {@code Principal}.
-     *
-     * <p>Subclasses may override this with a different implementation, if
-     * necessary.
-     * @since 1.8
-     */
+
     @Override
     public boolean implies(Subject subject) {
         return Principal.super.implies(subject);

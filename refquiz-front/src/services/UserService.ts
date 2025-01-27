@@ -11,7 +11,7 @@ class UserService {
     
     async createUser(user: User): Promise<User> {
         try {
-            const response = await axios.post(`${this.baseUrl}/users`, user);
+            const response = await axios.post(`${this.baseUrl}/api/v1/auth/create-user`, user);
             return response.data; 
         } catch (error: any) {
             console.error('Error creating user:', error.response?.data || error.message);
