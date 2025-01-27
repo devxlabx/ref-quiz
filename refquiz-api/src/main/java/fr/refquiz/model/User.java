@@ -43,8 +43,8 @@ public class User implements UserDetails, Principal {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false, length = 50)
-    private String status = "DEACTIVATED";
+    @Enumerated(EnumType.STRING)
+    private Status status ;
  
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

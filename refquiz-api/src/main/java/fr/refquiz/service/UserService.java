@@ -2,6 +2,7 @@ package fr.refquiz.service;
 
 import fr.refquiz.dto.UserDto;
 import fr.refquiz.model.Role;
+import fr.refquiz.model.Status;
 import fr.refquiz.model.User;
 import fr.refquiz.repository.RoleRepository;
 import fr.refquiz.repository.UserRepository;
@@ -70,6 +71,7 @@ public class UserService {
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         User user = convertToEntity(userDto);
         user.setRoles(List.of(userRole));
+        user.setStatus(Status.PENDING);
         User savedUser = userRepository.save(user);
         sendValidationEmail(user);
         return convertToDto(savedUser);
@@ -98,7 +100,7 @@ public class UserService {
     }
     public void activateAccount(String emailHash) {
         User user = userRepository.findByEmailHash(emailHash).orElseThrow(() -> new EntityNotFoundException("User with emailHash '" + emailHash + "' not found"));
-        user.setStatus("ACTIVE");
+        user.setStatus(Status.VALIDATED);
         userRepository.save(user);
     }
 }

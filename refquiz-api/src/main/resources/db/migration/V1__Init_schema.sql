@@ -7,7 +7,7 @@ CREATE TABLE users (
                        email VARCHAR(50) NOT NULL UNIQUE,
                        password VARCHAR(125) NOT NULL,
                        creation_date DATE NOT NULL DEFAULT CURRENT_DATE,
-                       status VARCHAR(50) NOT NULL DEFAULT 'DEACTIVATED',
+                       status VARCHAR(50) NOT NULL,
                        last_connexion DATE
 );
 
