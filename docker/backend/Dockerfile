@@ -10,7 +10,7 @@ RUN mvn clean package
 #Runtime stage
 FROM eclipse-temurin:17-jdk-alpine
 #arguments to add
-ARG APP_VERSION=1.0.0
+ARG APP_VERSION=1.0.0-SNAPSHOT
 WORKDIR /app
 #copy the builded app to my work directory
 COPY --from=build /build/target/refquiz-api*.jar /app/
