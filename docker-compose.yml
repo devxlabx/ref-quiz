@@ -22,6 +22,15 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+  refquiz-api:
+    container_name: backend-app
+    image: backend-app:1.0.0
+    ports:
+      - "8080:8080"
+    networks:
+      - refquiz-api-network
+    depends_on:
+      - postgres
 
 networks:
   refquiz-api-network:
