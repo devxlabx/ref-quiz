@@ -34,7 +34,7 @@ public class EmailService {
         if(emailTemplate==null){
             templateName="confirm-email";
         }else {
-            templateName=emailTemplate.name();
+            templateName=emailTemplate.getName();
         }
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(
@@ -48,7 +48,7 @@ public class EmailService {
         context.setVariables(properties);
         helper.setTo(receiver);
         helper.setSubject(subject);
-        helper.setFrom("admin@refquiz.com");
+        helper.setFrom("refquiz@gmail.com");
         String template = templateEngine.process(templateName, context);
         helper.setText(template, true);
         mailSender.send(mimeMessage);
