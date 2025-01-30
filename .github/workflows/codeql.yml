@@ -1,0 +1,51 @@
+name: "CodeQL Java Analysis"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '41 11 * * 0'  # Exécution programmée tous les dimanches à 11:41 UTC
+
+jobs:
+  analyze:
+    name: Analyze Java
+    runs-on: ubuntu-latest  # Utilisation d'un runner Ubuntu pour Java
+
+    permissions:
+      security-events: write  # Permission pour écrire les événements de sécurité
+      packages: read  # Permission pour lire les packs CodeQL
+      actions: read  # Permission pour lire les actions
+      contents: read  # Permission pour lire le contenu du dépôt
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: java  # Seul Java est analysé ici
+            build-mode: autobuild  # Mode de construction automatique pour Java
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@v3
+      with:
+        languages: ${{ matrix.language }}
+        build-mode: ${{ matrix.build-mode }}
+
+    # Si le mode de construction est 'manual', vous devez spécifier les commandes pour construire le code.
+    - if: matrix.build-mode == 'manual'
+      shell: bash
+      run: |
+        echo 'Si vous utilisez un mode de construction "manual", remplacez cette section par les commandes pour construire votre code.'
+        echo 'Par exemple :'
+        echo '  ./mvnw clean install'  # Exemple de commande pour construire un projet Java
+        exit 1
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v3
+      with:
+        category: "/language:java"  # Spécifie que l'analyse est pour Java
