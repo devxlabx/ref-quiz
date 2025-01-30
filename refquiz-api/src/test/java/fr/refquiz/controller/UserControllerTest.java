@@ -100,7 +100,7 @@ public class UserControllerTest {
         when(userService.createUser(any(UserDto.class))).thenReturn(createdUser);
 
         // When
-        ResponseEntity<UserDto> response = authController.createUser(userToCreate);
+        ResponseEntity<UserDto> response = userController.createUser(userToCreate);
 
         // Then
         assertNotNull(response, "Response should not be null");
