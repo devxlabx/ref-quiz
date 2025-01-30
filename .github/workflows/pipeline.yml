@@ -1,0 +1,70 @@
+name: RefQuiz Pipeline
+
+on:
+  push:
+    paths:
+      - ref-quiz/**
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    name: Compile and Build Project
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Compile project with Maven
+        run: |
+          cd refquiz-api
+          mvn clean compile
+
+      
+
+  unit-tests:
+    runs-on: ubuntu-latest
+    name: Unit Tests
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Running Tests
+        run: |
+          cd refquiz-api
+          mvn clean test
+          
+
+  build:
+    runs-on: ubuntu-latest
+    name: build backend
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - name: Build Backend
+        run: |
+          cd refquiz-api
+          mvn clean package
