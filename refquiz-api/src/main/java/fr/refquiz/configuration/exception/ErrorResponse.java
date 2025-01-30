@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-// TEST
+// TESTED 2
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
