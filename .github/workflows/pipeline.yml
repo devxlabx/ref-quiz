@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # Récupérer le code du repository
-      - name: Installer Java JDK 11 (Temurin)
+      - name: Installer Java JDK 17 (Temurin)
         uses: actions/setup-java@v2
         with:
-          java-version: '11'
-          distribution: 'temurin'  # Utiliser Temurin, la nouvelle distribution JDK
+          java-version: '17'
+          distribution: 'temurin'  # Utiliser Temurin, la distribution JDK 17
       - name: Compiler et construire avec Maven dans refquiz-api
         run: mvn -f refquiz-api/pom.xml clean install  # Indiquer explicitement le chemin du pom.xml dans le dossier refquiz-api
 
@@ -42,6 +42,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # Récupérer le code du repository
+      - name: Se déplacer dans le dossier refquiz-api
+        run: cd refquiz-api  # Se déplacer dans le dossier refquiz-api
       - name: Configurer CodeQL
         uses: github/codeql-action/setup@v2  # Configurer l'action CodeQL
       - name: Lancer l'analyse CodeQL
