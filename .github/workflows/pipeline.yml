@@ -1,70 +1,36 @@
-name: RefQuiz Pipeline
+name: CI Pipeline
 
 on:
   push:
-    paths:
-      - ref-quiz/**
+    branches:
+      - main
 
 jobs:
-  compile:
+  sonarqube:
     runs-on: ubuntu-latest
-    name: Compile and Build Project
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'temurin'
-
-      - name: Compile project with Maven
+        uses: actions/checkout@v2
+      - name: Run SonarQube
         run: |
-          cd refquiz-api
-          mvn clean compile
+          bash .github/workflows/sonarqube.yml 
 
-      
-
-  unit-tests:
+  maven:
     runs-on: ubuntu-latest
-    name: Unit Tests
+    needs: sonarqube
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'temurin'
-
-      - name: Running Tests
+        uses: actions/checkout@v2
+      - name: Run Maven Build
         run: |
-          cd refquiz-api
-          mvn clean test
-          
+          bash .github/workflows/maven.yml
 
-  build:
+  codeql:
     runs-on: ubuntu-latest
-    name: build backend
+    needs: maven
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'temurin'
-
-      - name: Build Backend
+        uses: actions/checkout@v2
+      - name: Run CodeQL Analysis
         run: |
-          cd refquiz-api
-          mvn clean package
+          bash .github/workflows/codeql.yml 
