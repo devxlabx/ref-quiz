@@ -22,6 +22,9 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+    networks:
+      - refquiz-api-network
+
   refquiz-api:
     container_name: refquiz-api
     image: backend-app
@@ -31,24 +34,16 @@ services:
       - refquiz-api-network
     depends_on:
       - postgres
-      -
+
   refquiz-front:
     container_name: refquiz-front
-    image: frontend-app
-    networks:
-      - refquiz-api-network
-    depends_on:
-      - refquiz-api
-
-  nginx-server:
-    container_name: nginx-server
     image: nginx-server
     ports:
       - "3000:80"
     networks:
       - refquiz-api-network
     depends_on:
-      - refquiz-front
+      - refquiz-api
 
 networks:
   refquiz-api-network:
