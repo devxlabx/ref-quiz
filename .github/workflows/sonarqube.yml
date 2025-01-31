@@ -1,4 +1,4 @@
-name: SonarQube analysis
+name: SonarCloud analysis
 
 on:
   push:
@@ -24,7 +24,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Cache SonarQube packages
+      - name: Cache SonarCloud packages
         uses: actions/cache@v3
         with:
           path: ~/.sonar/cache
@@ -42,14 +42,17 @@ jobs:
         working-directory: refquiz-api
         run: mvn clean verify
 
-      - name: Analyze with SonarQube
-        run: mvn sonar:sonar \
-          -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-          -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }} \
-          -Dsonar.projectKey=<VOTRE_PROJECT_KEY> \
-          -Dsonar.sources=src/main/java \
-          -Dsonar.tests=src/test/java \
-          -Dsonar.java.binaries=target/classes \
-          -Dsonar.junit.reportPaths=target/surefire-reports \
-          -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
+      - name: Analyze with SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORG }}
+            -Dsonar.sources=src/main/java
+            -Dsonar.tests=src/test/java
+            -Dsonar.java.binaries=target/classes
+            -Dsonar.junit.reportPaths=target/surefire-reports
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         working-directory: refquiz-api
