@@ -22,6 +22,9 @@ services:
     ports:
       - 1080:1080
       - 1025:1025
+    networks:
+      - refquiz-api-network
+
   refquiz-api:
     container_name: refquiz-api
     image: backend-app
@@ -34,7 +37,7 @@ services:
 
   refquiz-front:
     container_name: refquiz-front
-    image: frontend-app
+    image: nginx-server
     ports:
       - "3000:80"
     networks:
