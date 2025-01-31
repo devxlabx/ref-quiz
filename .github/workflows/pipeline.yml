@@ -12,11 +12,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2  # Récupérer le code du repository
-      - name: Installer Java JDK 11
+      - name: Installer Java JDK 11 (Temurin)
         uses: actions/setup-java@v2
         with:
           java-version: '11'
-          distribution: 'adoptopenjdk'
+          distribution: 'temurin'  # Utiliser Temurin, la nouvelle distribution JDK
       - name: Compiler et construire avec Maven
         run: mvn clean install  # Construire le projet avec Maven
 
