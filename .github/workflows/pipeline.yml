@@ -28,24 +28,45 @@ jobs:
     name: 🔍 Analyse avec SonarQube
     steps:
       - name: 📥 Checkout code
-        uses: actions/checkout@v2  # Récupérer le code du repository
+        uses: actions/checkout@v4  # Récupérer le code du repository
 
       - name: ☕ Installer Java JDK 17 (Temurin)
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 📊 Lancer l'analyse SonarQube
-        run: |
-          cd refquiz-api
-          mvn compile  # Assure que les fichiers .class sont bien générés
-          mvn sonar:sonar \
-            -Dsonar.projectKey=my_project_key \
-            -Dsonar.organization=my_org \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.java.binaries=target/classes  # Indiquer où sont les fichiers compilés
+      - name: 📚 Cache SonarCloud packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: 📚 Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      - name: 🌟 Compiler le projet
+        working-directory: refquiz-api
+        run: mvn clean verify
+
+      - name: 📊 Analyser avec SonarQube
+        uses: SonarSource/sonarcloud-github-action@v2.2.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=${{ secrets.SONAR_ORG }}
+            -Dsonar.sources=refquiz-api/src/main/java
+            -Dsonar.tests=refquiz-api/src/test/java
+            -Dsonar.java.binaries=refquiz-api/target/classes
+            -Dsonar.junit.reportPaths=refquiz-api/target/surefire-reports
+            -Dsonar.coverage.jacoco.xmlReportPaths=refquiz-api/target/site/jacoco/jacoco.xml
 
   codeql:
     runs-on: ubuntu-latest
@@ -61,4 +82,4 @@ jobs:
       - name: 🚀 Lancer l'analyse CodeQL
         uses: github/codeql-action/analyze@v2
         with:
-          languages: java  # Adapter le langage selon ton projet
+          languages: java  
