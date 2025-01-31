@@ -17,10 +17,8 @@ jobs:
         with:
           java-version: '11'
           distribution: 'temurin'  # Utiliser Temurin, la nouvelle distribution JDK
-      - name: Se déplacer dans le dossier refquiz-api
-        run: cd refquiz-api  # Se déplacer dans le dossier refquiz-api
-      - name: Compiler et construire avec Maven
-        run: mvn clean install  # Construire le projet avec Maven dans le dossier refquiz-api
+      - name: Compiler et construire avec Maven dans refquiz-api
+        run: mvn -f refquiz-api/pom.xml clean install  # Indiquer explicitement le chemin du pom.xml dans le dossier refquiz-api
 
   sonarqube:
     runs-on: ubuntu-latest
